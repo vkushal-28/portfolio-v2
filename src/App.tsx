@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Footer, Navbar } from '@/components/layout'
 import { Section, SectionHeader } from '@/components/ui'
 import { navLinks } from '@/data'
+import { Hero } from '@/sections'
 
 // Temporary dev route until the real sections exist (removed in Phase 13).
 const Playground = lazy(() => import('@/playground/Playground'))
@@ -20,7 +21,8 @@ function App() {
     <>
       <Navbar />
       <main id="main">
-        {/* TEMPORARY: anchor targets for the nav; each is replaced by its real section in Phases 5–12. */}
+        <Hero />
+        {/* TEMPORARY: anchor targets for the nav; each is replaced by its real section in Phases 6–12. */}
         {navLinks.map((link, i) => (
           <Section
             key={link.href}

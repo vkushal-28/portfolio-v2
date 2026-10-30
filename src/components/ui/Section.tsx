@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import type { ComponentPropsWithRef } from 'react'
 import { cn } from '@/lib/cn'
 import { Container } from './Container'
 
@@ -12,7 +12,7 @@ const borders = {
   none: '',
 } satisfies Record<Bordered, string>
 
-export type SectionProps = HTMLAttributes<HTMLElement> & {
+export type SectionProps = ComponentPropsWithRef<'section'> & {
   /** `alt` uses the `bg2` band colour. */
   band?: Band
   bordered?: Bordered

@@ -27,6 +27,8 @@
   --color-info: #afc8ff; /* education badge text */
   --color-info-bg: #1e2433; /* education badge background */
   --color-err: #ff8f80; /* form errors */
+  --color-syn-kw: #c792ea; /* code: keywords */
+  --color-syn-num: #f78c6c; /* code: numbers / booleans */
 
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
@@ -45,6 +47,7 @@
   --animate-marquee: marquee 32s linear infinite;
   --animate-orbit: orbit 60s linear infinite;
   --animate-blink: blink 1s steps(1) infinite;
+  --animate-grid-pan: grid-pan 6s linear infinite;
   --animate-pulse-ring: pulse-ring 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 
   @keyframes marquee {
@@ -66,6 +69,14 @@
     }
     50% {
       opacity: 0;
+    }
+  }
+  @keyframes grid-pan {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: var(--grid-size) var(--grid-size);
     }
   }
   @keyframes pulse-ring {

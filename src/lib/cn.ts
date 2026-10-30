@@ -27,6 +27,8 @@ const twMerge = extendTailwindMerge({
         'info',
         'info-bg',
         'err',
+        'syn-kw',
+        'syn-num',
       ],
       radius: ['tile', 'window', 'card', 'bento'],
       ease: ['expo'],
