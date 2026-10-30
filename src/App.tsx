@@ -1,11 +1,27 @@
-// Temporary Phase 1 smoke test: confirms Tailwind and both fonts load.
+import { lazy, Suspense } from 'react'
+import { Button, Section, SectionTitle } from '@/components/ui'
+
+// Temporary dev route until the real sections exist (removed in Phase 13).
+const Playground = lazy(() => import('@/playground/Playground'))
+const isPlayground = window.location.pathname.replace(/\/$/, '') === '/playground'
+
 function App() {
+  if (isPlayground) {
+    return (
+      <Suspense fallback={null}>
+        <Playground />
+      </Suspense>
+    )
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-neutral-950 p-6 text-neutral-100">
-      <h1 className="font-sans text-5xl font-semibold tracking-tight">Kushal Vala</h1>
-      <p className="font-mono text-sm tracking-widest text-lime-300 uppercase">
-        Phase 1 · setup complete
-      </p>
+    <main>
+      <Section>
+        <SectionTitle as="h1">Kushal Vala</SectionTitle>
+        <Button href="/playground" icon="arrow" className="mt-8">
+          Open component playground
+        </Button>
+      </Section>
     </main>
   )
 }

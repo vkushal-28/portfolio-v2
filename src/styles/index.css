@@ -3,22 +3,125 @@
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
 
-/* Full design tokens arrive in Phase 2. */
 @theme {
+  /* Drop Tailwind's default palette so only design tokens are available. */
+  --color-*: initial;
+
+  --color-bg: #0a0b0d; /* page */
+  --color-bg2: #0c0d10; /* alternate section band */
+  --color-s1: #0e0f12; /* card */
+  --color-s2: #121418; /* raised card / editor */
+  --color-s3: #15171b; /* chip / tile */
+  --color-ln1: #1a1c21; /* faint border / divider */
+  --color-ln2: #23262d; /* card border */
+  --color-ln3: #2e323a; /* control border */
+  --color-ln4: #3a3f48; /* strong border / outline text */
+  --color-tx: #edebe6; /* primary text */
+  --color-tx2: #d6d4cf;
+  --color-tx3: #b4b7be;
+  --color-mu: #9a9da5; /* body muted */
+  --color-mu2: #7c808a; /* labels */
+  --color-mu3: #5e626b; /* decorative only — not for meaningful text */
+  --color-ac: #c8f169; /* accent — lime */
+  --color-ac2: #e2ff9e; /* accent hover */
+  --color-info: #afc8ff; /* education badge text */
+  --color-info-bg: #1e2433; /* education badge background */
+  --color-err: #ff8f80; /* form errors */
+
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  --radius-tile: 14px;
+  --radius-window: 20px;
+  --radius-card: 22px;
+  --radius-bento: 24px;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Simple infinite loops only; everything else animates with Motion. */
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-orbit: orbit 60s linear infinite;
+  --animate-blink: blink 1s steps(1) infinite;
+  --animate-pulse-ring: pulse-ring 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 60%, transparent);
+    }
+    70%,
+    100% {
+      box-shadow: 0 0 0 8px transparent;
+    }
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg font-sans text-tx antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-ac);
+    color: var(--color-bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ac);
+    outline-offset: 3px;
+  }
+
+  section[id] {
+    scroll-margin-top: 80px;
+  }
 }
 
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-tx);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Backstop: components also check useReducedMotion() / use motion-safe. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-}
-
-section[id] {
-  scroll-margin-top: 80px;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
