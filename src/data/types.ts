@@ -31,6 +31,8 @@ export type Profile = {
 
 export type Social = { label: string; href: string }
 
+export type NavItem = { label: string; href: string }
+
 export const experienceTypes = ['Experience', 'Education'] as const
 export type ExperienceType = (typeof experienceTypes)[number]
 

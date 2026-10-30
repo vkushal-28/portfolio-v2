@@ -31,6 +31,9 @@
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 
+  /* Primary layout breakpoint from the spec (nav, hero, about, timeline). */
+  --breakpoint-md: 860px;
+
   --radius-tile: 14px;
   --radius-window: 20px;
   --radius-card: 22px;
