@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Footer, Navbar } from '@/components/layout'
 import { Section, SectionHeader } from '@/components/ui'
 import { navLinks } from '@/data'
-import { Hero, MarqueeBand } from '@/sections'
+import { About, Hero, MarqueeBand } from '@/sections'
 
 // Temporary dev route until the real sections exist (removed in Phase 13).
 const Playground = lazy(() => import('@/playground/Playground'))
@@ -23,17 +23,20 @@ function App() {
       <main id="main">
         <Hero />
         <MarqueeBand />
-        {/* TEMPORARY: anchor targets for the nav; each is replaced by its real section in Phases 7–12. */}
-        {navLinks.map((link, i) => (
-          <Section
-            key={link.href}
-            id={link.href.slice(1)}
-            band={i % 2 ? 'alt' : 'default'}
-            className="min-h-[80vh]"
-          >
-            <SectionHeader index={String(i + 1).padStart(2, '0')} label={link.label} />
-          </Section>
-        ))}
+        <About />
+        {/* TEMPORARY: anchor targets for the nav; each is replaced by its real section in Phases 8–12. */}
+        {navLinks.map((link, i) =>
+          link.href === '#about' ? null : (
+            <Section
+              key={link.href}
+              id={link.href.slice(1)}
+              band={i % 2 ? 'alt' : 'default'}
+              className="min-h-[80vh]"
+            >
+              <SectionHeader index={String(i + 1).padStart(2, '0')} label={link.label} />
+            </Section>
+          ),
+        )}
       </main>
       <Footer />
     </>
