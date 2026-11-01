@@ -49,7 +49,7 @@ export function FilterTabs<T extends string>({
             aria-pressed={active}
             onClick={() => onChange(option.value)}
             className={cn(
-              'relative min-h-11 shrink-0 rounded-full px-4 font-mono text-[13px] whitespace-nowrap transition-colors duration-300',
+              'relative min-h-11 shrink-0 rounded-full px-3 font-mono text-[13px] whitespace-nowrap transition-colors duration-300 sm:px-4',
               active ? 'text-bg' : 'text-mu hover:text-tx',
             )}
             {...pressMotion}

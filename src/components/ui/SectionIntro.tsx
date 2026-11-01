@@ -16,7 +16,7 @@ export function SectionIntro({ title, aside, className }: SectionIntroProps) {
     <div className={cn('flex flex-wrap items-end justify-between gap-x-12 gap-y-6', className)}>
       {title}
       {aside && (
-        <Reveal delay={0.1} className="max-w-md">
+        <Reveal delay={0.1} className="max-w-full min-w-0 sm:max-w-md">
           {typeof aside === 'string' ? (
             <p className="text-base leading-relaxed text-mu md:text-lg">{aside}</p>
           ) : (
