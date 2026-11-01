@@ -25,13 +25,15 @@ export function Muted({
   )
 }
 
-/** Renders data-driven heading copy (`TextRun[]`) with `Accent` / `Muted`. */
+/** Renders data-driven heading copy (`TextRun[]`) with `Accent` / `Muted` (`faint` = decorative glyphs). */
 export function RichText({ runs }: { runs: readonly TextRun[] }) {
   return runs.map(({ text, tone }, i) =>
     tone === 'accent' ? (
       <Accent key={i}>{text}</Accent>
-    ) : tone === 'muted' ? (
-      <Muted key={i}>{text}</Muted>
+    ) : tone === 'muted' || tone === 'faint' ? (
+      <Muted key={i} tone={tone === 'faint' ? 'faint' : 'default'}>
+        {text}
+      </Muted>
     ) : (
       text
     ),

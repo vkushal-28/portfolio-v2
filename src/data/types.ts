@@ -1,7 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 
 /** Heading copy split into styled runs (rendered with Accent / Muted). */
-export type TextRun = { text: string; tone?: 'accent' | 'muted' }
+export type TextRun = { text: string; tone?: 'accent' | 'muted' | 'faint' }
 
 export type Fact = { label: string; value: string }
 

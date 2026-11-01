@@ -40,8 +40,7 @@ export const experience: readonly Milestone[] = [
   },
   {
     type: 'Education',
-    // PLACEHOLDER: replace with graduation years.
-    when: 'Postgraduate',
+    when: '2016 — 2018',
     title: 'M.Sc. in Information Technology',
     org: 'Kadi Sarva Vishwavidhyalaya · Gandhinagar',
     hash: 'e48a17c',
@@ -49,8 +48,7 @@ export const experience: readonly Milestone[] = [
   },
   {
     type: 'Education',
-    // PLACEHOLDER: replace with graduation years.
-    when: 'Undergraduate',
+    when: '2013 — 2016',
     title: 'Bachelor of Computer Applications',
     org: 'Gujarat University · Ahmedabad',
     hash: '91fd5b2',
