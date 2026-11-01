@@ -30,6 +30,8 @@ export function RichText({ runs }: { runs: readonly TextRun[] }) {
   return runs.map(({ text, tone }, i) =>
     tone === 'accent' ? (
       <Accent key={i}>{text}</Accent>
+    ) : tone === 'outline' ? (
+      <Outline key={i}>{text}</Outline>
     ) : tone === 'muted' || tone === 'faint' ? (
       <Muted key={i} tone={tone === 'faint' ? 'faint' : 'default'}>
         {text}

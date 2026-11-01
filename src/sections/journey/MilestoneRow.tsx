@@ -9,7 +9,7 @@ import {
   slideRight,
   spring,
 } from '@/components/motion'
-import { Badge, Card, Chip, MonoLabel, OutlineNumber } from '@/components/ui'
+import { Badge, Card, Chip, IconNode, MonoLabel, OutlineNumber } from '@/components/ui'
 import { journey, type Milestone } from '@/data'
 import { cn } from '@/lib/cn'
 
@@ -92,12 +92,7 @@ export function MilestoneRow({ milestone, chapter, side, compact }: MilestoneRow
         <motion.div variants={nodeIn} className="relative size-14 shrink-0">
           <RippleRings />
           <OrbitRing />
-          <span className="relative grid size-full place-items-center rounded-full border border-ln4 bg-bg2 transition duration-500 ease-expo group-hover:scale-[1.08] group-hover:border-ac group-hover:bg-ac">
-            <Icon
-              aria-hidden="true"
-              className="size-5.5 text-ac transition-colors duration-500 group-hover:text-bg"
-            />
-          </span>
+          <IconNode icon={Icon} surface="bg2" />
         </motion.div>
       </div>
 
