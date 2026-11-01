@@ -56,7 +56,14 @@ export const rise = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
 } satisfies Variants
 
-export type RevealVariant = 'fadeUp' | 'heading' | 'fade' | 'slideLeft' | 'slideRight' | 'rise'
+/** Small tiles popping into a grid. */
+export const pop = {
+  hidden: { opacity: 0, y: 18, scale: 0.94 },
+  show: { opacity: 1, y: 0, scale: 1, transition: spring },
+} satisfies Variants
+
+export type RevealVariant =
+  'fadeUp' | 'heading' | 'fade' | 'slideLeft' | 'slideRight' | 'rise' | 'pop'
 
 export const revealVariants = {
   fadeUp,
@@ -65,6 +72,7 @@ export const revealVariants = {
   slideLeft,
   slideRight,
   rise,
+  pop,
 } satisfies Record<RevealVariant, Variants>
 
 export const viewportOnce = { once: true, amount: 0.15, margin: '0px 0px -6% 0px' } as const

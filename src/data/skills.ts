@@ -4,6 +4,7 @@ import type { CoreStackItem, SkillGroup } from './types'
 export const skillGroups: readonly SkillGroup[] = [
   {
     name: 'Frontend',
+    tab: 'Frontend',
     icon: AppWindow,
     desc: 'Fast, accessible interfaces with modern React, server rendering and smart state management — tuned for Core Web Vitals.',
     items: [
@@ -19,6 +20,7 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     name: 'Backend & Data',
+    tab: 'Backend',
     icon: Database,
     desc: 'Secure RESTful APIs and modular microservices backed by well-modelled, well-indexed data.',
     items: [
@@ -33,6 +35,7 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     name: 'Cloud & DevOps',
+    tab: 'Cloud',
     icon: Cloud,
     desc: 'Serverless and containerized systems on AWS, shipped through automated, zero-downtime pipelines.',
     items: [
@@ -47,6 +50,7 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     name: 'Security & Testing',
+    tab: 'Security',
     icon: ShieldCheck,
     desc: 'Authentication, authorization and layered test suites that keep high-stakes releases safe.',
     items: [
@@ -62,6 +66,7 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     name: 'AI & Workflow',
+    tab: 'AI & Workflow',
     icon: Cpu,
     desc: 'AI-accelerated delivery with rigorous human review, run inside collaborative Agile teams.',
     items: [

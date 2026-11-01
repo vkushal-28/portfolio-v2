@@ -12,6 +12,8 @@ export type FilterTabsProps<T extends string> = {
   onChange: (value: T) => void
   /** Accessible name for the group. */
   ariaLabel: string
+  /** Wrap onto extra rows instead of scrolling sideways when space runs out. */
+  wrap?: boolean
   className?: string
 }
 
@@ -21,6 +23,7 @@ export function FilterTabs<T extends string>({
   value,
   onChange,
   ariaLabel,
+  wrap = false,
   className,
 }: FilterTabsProps<T>) {
   const id = useId()
@@ -32,7 +35,8 @@ export function FilterTabs<T extends string>({
       role="group"
       aria-label={ariaLabel}
       className={cn(
-        'no-scrollbar inline-flex max-w-full gap-1 overflow-x-auto rounded-full border border-ln2 bg-s1 p-1',
+        'inline-flex max-w-full gap-1 border border-ln2 bg-s1 p-1',
+        wrap ? 'flex-wrap rounded-[26px]' : 'no-scrollbar overflow-x-auto rounded-full',
         className,
       )}
     >

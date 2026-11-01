@@ -24,6 +24,7 @@
   --color-mu3: #5e626b; /* decorative only — not for meaningful text */
   --color-ac: #c8f169; /* accent — lime */
   --color-ac2: #e2ff9e; /* accent hover */
+  --color-ac-deep: #121510; /* lime-tinted surface (AI card) */
   --color-info: #afc8ff; /* education badge text */
   --color-info-bg: #1e2433; /* education badge background */
   --color-err: #ff8f80; /* form errors */
@@ -55,6 +56,7 @@
   --animate-ripple: ripple 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
   --animate-shimmer: shimmer 4s linear infinite;
   --animate-spin-ang: spin-ang 3.2s linear infinite;
+  --animate-glow-pulse: glow-pulse 6s ease-in-out infinite;
 
   @keyframes marquee {
     from {
@@ -133,6 +135,17 @@
   @keyframes spin-ang {
     to {
       --ang: 360deg;
+    }
+  }
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(0.9);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
     }
   }
   @keyframes pulse-ring {

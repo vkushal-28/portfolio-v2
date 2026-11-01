@@ -49,6 +49,8 @@ export type Milestone = {
 
 export type SkillGroup = {
   name: string
+  /** Short label for the explorer tabs (defaults to `name`). */
+  tab?: string
   icon: LucideIcon
   desc: string
   items: readonly string[]
