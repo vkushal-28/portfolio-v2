@@ -1,28 +1,23 @@
-import { lazy, Suspense } from 'react'
-import { Button, Section, SectionTitle } from '@/components/ui'
-
-// Temporary dev route until the real sections exist (removed in Phase 13).
-const Playground = lazy(() => import('@/playground/Playground'))
-const isPlayground = window.location.pathname.replace(/\/$/, '') === '/playground'
+import { Footer, Navbar, SkipLink } from '@/components/layout'
+import { About, Contact, Hero, Journey, MarqueeBand, Projects, Services, Skills } from '@/sections'
 
 function App() {
-  if (isPlayground) {
-    return (
-      <Suspense fallback={null}>
-        <Playground />
-      </Suspense>
-    )
-  }
-
   return (
-    <main>
-      <Section>
-        <SectionTitle as="h1">Kushal Vala</SectionTitle>
-        <Button href="/playground" icon="arrow" className="mt-8">
-          Open component playground
-        </Button>
-      </Section>
-    </main>
+    <>
+      <SkipLink />
+      <Navbar />
+      <main id="main" tabIndex={-1} className="outline-none">
+        <Hero />
+        <MarqueeBand />
+        <About />
+        <Journey />
+        <Skills />
+        <Services />
+        <Projects />
+        <Contact />
+      </main>
+      <Footer />
+    </>
   )
 }
 

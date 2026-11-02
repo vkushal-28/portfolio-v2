@@ -1,0 +1,8 @@
+export { Hero } from './Hero'
+export { MarqueeBand } from './MarqueeBand'
+export { About } from './About'
+export { Journey } from './Journey'
+export { Skills } from './Skills'
+export { Services } from './Services'
+export { Projects } from './Projects'
+export { Contact } from './Contact'

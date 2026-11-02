@@ -50,7 +50,20 @@ export const stagger = (step = 0.08, delay = 0) =>
     show: { transition: { staggerChildren: step, delayChildren: delay } },
   }) satisfies Variants
 
-export type RevealVariant = 'fadeUp' | 'heading' | 'fade' | 'slideLeft' | 'slideRight'
+/** Light rise for content cascading inside an already-animated card. */
+export const rise = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
+} satisfies Variants
+
+/** Small tiles popping into a grid. */
+export const pop = {
+  hidden: { opacity: 0, y: 18, scale: 0.94 },
+  show: { opacity: 1, y: 0, scale: 1, transition: spring },
+} satisfies Variants
+
+export type RevealVariant =
+  'fadeUp' | 'heading' | 'fade' | 'slideLeft' | 'slideRight' | 'rise' | 'pop'
 
 export const revealVariants = {
   fadeUp,
@@ -58,6 +71,8 @@ export const revealVariants = {
   fade,
   slideLeft,
   slideRight,
+  rise,
+  pop,
 } satisfies Record<RevealVariant, Variants>
 
 export const viewportOnce = { once: true, amount: 0.15, margin: '0px 0px -6% 0px' } as const

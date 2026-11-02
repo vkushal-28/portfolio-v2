@@ -44,7 +44,7 @@ export function Orbit({
       className={cn(
         'pointer-events-none relative rounded-full border',
         dashed ? 'border-dashed border-ln3' : 'border-ln1',
-        !reduce && 'animate-orbit',
+        !reduce && 'animate-orbit will-change-transform',
         className,
       )}
       style={{ width: size, height: size, ...spin(reverse) }}
@@ -58,7 +58,10 @@ export function Orbit({
           }}
         >
           <div className="-translate-x-1/2 -translate-y-1/2">
-            <div className={cn(!reduce && 'animate-orbit')} style={spin(!reverse)}>
+            <div
+              className={cn(!reduce && 'animate-orbit will-change-transform')}
+              style={spin(!reverse)}
+            >
               {item.content}
             </div>
           </div>

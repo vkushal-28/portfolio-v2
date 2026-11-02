@@ -2,12 +2,13 @@ import { motion, useReducedMotion, type HTMLMotionProps } from 'motion/react'
 import { spring } from '@/components/motion/presets'
 import { cn } from '@/lib/cn'
 
-type CardVariant = 'default' | 'raised' | 'bento'
+type CardVariant = 'default' | 'raised' | 'bento' | 'dashed'
 
 const variants = {
   default: 'rounded-card border border-ln2 bg-s1',
   raised: 'rounded-card border border-ln2 bg-linear-to-b from-s2 to-bg2',
   bento: 'overflow-hidden rounded-bento border border-ln2 bg-s1',
+  dashed: 'rounded-bento border border-dashed border-ln3',
 } satisfies Record<CardVariant, string>
 
 const tags = { div: motion.div, article: motion.article, li: motion.li, section: motion.section }

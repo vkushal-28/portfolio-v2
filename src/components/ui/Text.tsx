@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import type { TextRun } from '@/data/types'
 import { cn } from '@/lib/cn'
 
 type TextProps = { children: ReactNode; className?: string }
@@ -21,5 +22,22 @@ export function Muted({
 }: TextProps & { tone?: 'default' | 'faint' }) {
   return (
     <span className={cn(tone === 'faint' ? 'text-mu3' : 'text-mu', className)}>{children}</span>
+  )
+}
+
+/** Renders data-driven heading copy (`TextRun[]`) with `Accent` / `Muted` (`faint` = decorative glyphs). */
+export function RichText({ runs }: { runs: readonly TextRun[] }) {
+  return runs.map(({ text, tone }, i) =>
+    tone === 'accent' ? (
+      <Accent key={i}>{text}</Accent>
+    ) : tone === 'outline' ? (
+      <Outline key={i}>{text}</Outline>
+    ) : tone === 'muted' || tone === 'faint' ? (
+      <Muted key={i} tone={tone === 'faint' ? 'faint' : 'default'}>
+        {text}
+      </Muted>
+    ) : (
+      text
+    ),
   )
 }

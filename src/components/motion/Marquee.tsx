@@ -45,7 +45,7 @@ export function Marquee({
       <div
         className={cn(
           'flex w-max',
-          !reduce && 'animate-marquee',
+          !reduce && 'animate-marquee will-change-transform',
           pauseOnHover && 'group-hover:[animation-play-state:paused]',
         )}
         style={

@@ -12,6 +12,8 @@ export type FilterTabsProps<T extends string> = {
   onChange: (value: T) => void
   /** Accessible name for the group. */
   ariaLabel: string
+  /** Wrap onto extra rows instead of scrolling sideways when space runs out. */
+  wrap?: boolean
   className?: string
 }
 
@@ -21,6 +23,7 @@ export function FilterTabs<T extends string>({
   value,
   onChange,
   ariaLabel,
+  wrap = false,
   className,
 }: FilterTabsProps<T>) {
   const id = useId()
@@ -32,7 +35,8 @@ export function FilterTabs<T extends string>({
       role="group"
       aria-label={ariaLabel}
       className={cn(
-        'no-scrollbar inline-flex max-w-full gap-1 overflow-x-auto rounded-full border border-ln2 bg-s1 p-1',
+        'inline-flex max-w-full gap-1 border border-ln2 bg-s1 p-1',
+        wrap ? 'flex-wrap rounded-[26px]' : 'no-scrollbar overflow-x-auto rounded-full',
         className,
       )}
     >
@@ -45,7 +49,7 @@ export function FilterTabs<T extends string>({
             aria-pressed={active}
             onClick={() => onChange(option.value)}
             className={cn(
-              'relative min-h-11 shrink-0 rounded-full px-4 font-mono text-[13px] whitespace-nowrap transition-colors duration-300',
+              'relative min-h-11 shrink-0 rounded-full px-3 font-mono text-[13px] whitespace-nowrap transition-colors duration-300 sm:px-4',
               active ? 'text-bg' : 'text-mu hover:text-tx',
             )}
             {...pressMotion}

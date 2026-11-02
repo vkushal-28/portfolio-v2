@@ -26,7 +26,10 @@ export type SectionTitleProps = Omit<
   children: ReactNode
 }
 
-/** Display heading that reveals with `headingIn`. */
+/**
+ * Display heading that reveals with `headingIn`. The in-view trigger sits on a wrapper:
+ * `whileInView` never fires on the fully clip-path-hidden heading itself.
+ */
 export function SectionTitle({
   as = 'h2',
   size = 'xl',
@@ -38,15 +41,14 @@ export function SectionTitle({
   const reduce = useReducedMotion()
   const Tag = tags[as]
   return (
-    <Tag
-      variants={withDelay(headingIn, delay)}
-      initial={reduce ? 'show' : 'hidden'}
-      whileInView="show"
-      viewport={viewportOnce}
-      className={cn('text-balance text-tx', sizes[size], className)}
-      {...rest}
-    >
-      {children}
-    </Tag>
+    <motion.div initial={reduce ? 'show' : 'hidden'} whileInView="show" viewport={viewportOnce}>
+      <Tag
+        variants={withDelay(headingIn, delay)}
+        className={cn('text-balance text-tx', sizes[size], className)}
+        {...rest}
+      >
+        {children}
+      </Tag>
+    </motion.div>
   )
 }
