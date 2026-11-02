@@ -8,6 +8,10 @@ export function ProjectMedia({ project }: { project: Project }) {
       <img
         src={project.image}
         alt={`${project.title} screenshot`}
+        width={1200}
+        height={750}
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 size-full object-cover transition-transform duration-800 ease-expo group-hover/card:scale-[1.04]"
       />
     )

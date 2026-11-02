@@ -14,10 +14,6 @@ export type IndexRowProps = {
   className?: string
 }
 
-/**
- * Numbered list row: index · title · meta · arrow. On hover (or `active`) a lime gradient
- * sweeps in from the left, the row indents, the title turns lime and the arrow tilts up.
- */
 // Full class names (not built from fragments) so Tailwind can see them.
 const states = {
   hover: {
@@ -36,6 +32,10 @@ const states = {
   },
 }
 
+/**
+ * Numbered list row: index · title · meta · arrow. On hover (or `active`) a lime gradient
+ * sweeps in from the left, the row indents, the title turns lime and the arrow tilts up.
+ */
 export function IndexRow({
   index,
   title,

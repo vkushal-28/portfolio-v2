@@ -15,6 +15,9 @@ export type MediaFrameProps = HTMLAttributes<HTMLDivElement> & {
   dots?: number
   /** Looping scan-light sweep. */
   scan?: boolean
+  /** Intrinsic image size (avoids layout shift); match the source file. Default 800×1000. */
+  width?: number
+  height?: number
   /** Overlays, e.g. a status pill. */
   children?: ReactNode
 }
@@ -27,6 +30,8 @@ export function MediaFrame({
   aspect = '4 / 5',
   dots = 14,
   scan = false,
+  width = 800,
+  height = 1000,
   className,
   style,
   children,
@@ -43,7 +48,15 @@ export function MediaFrame({
       {...rest}
     >
       {src ? (
-        <img src={src} alt={alt} className="absolute inset-0 size-full object-cover" />
+        <img
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 size-full object-cover"
+        />
       ) : (
         <div
           role="img"

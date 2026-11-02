@@ -2,8 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Stagger, StaggerItem, ease, spring } from '@/components/motion'
 import { Card, CheckItem, Chip, Glow, IconBadge, MonoLabel, OutlineNumber } from '@/components/ui'
 import { offer, type Service } from '@/data'
-
-const pad = (n: number) => String(n).padStart(2, '0')
+import { pad2 } from '@/lib/format'
 
 type ServiceDetailProps = {
   id: string
@@ -36,7 +35,7 @@ export function ServiceDetail({ id, service, index, total }: ServiceDetailProps)
           className="relative"
         >
           <OutlineNumber
-            value={pad(index + 1)}
+            value={pad2(index + 1)}
             size="lg"
             tone="faint"
             className="absolute -top-12 -right-2 -z-10"
@@ -50,7 +49,7 @@ export function ServiceDetail({ id, service, index, total }: ServiceDetailProps)
               <IconBadge icon={service.icon} size="lg" />
             </motion.span>
             <span className="font-mono text-xs text-mu2">
-              {detail.service} {pad(index + 1)} / {pad(total)}
+              {detail.service} {pad2(index + 1)} / {pad2(total)}
             </span>
           </div>
 

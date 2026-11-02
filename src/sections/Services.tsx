@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Reveal, Stagger, StaggerItem } from '@/components/motion'
 import {
   Button,
+  Card,
   MonoLabel,
   ProcessTrack,
   RichText,
@@ -12,6 +13,7 @@ import {
   ServiceRow,
 } from '@/components/ui'
 import { offer, services, workflow } from '@/data'
+import { pad2 } from '@/lib/format'
 import { ServiceDetail } from './services/ServiceDetail'
 
 const PANEL_ID = 'svc-panel'
@@ -37,7 +39,7 @@ export function Services() {
           {services.map((service, i) => (
             <StaggerItem key={service.title} as="li" variant="rise">
               <ServiceRow
-                index={String(i + 1).padStart(2, '0')}
+                index={pad2(i + 1)}
                 title={service.title}
                 metric={service.metric}
                 active={i === active}
@@ -79,7 +81,10 @@ export function Services() {
 
       {/* 10.3 CTA strip */}
       <Reveal className="mt-14">
-        <div className="flex flex-wrap items-center justify-between gap-6 rounded-bento border border-dashed border-ln3 p-6 md:p-8">
+        <Card
+          variant="dashed"
+          className="flex flex-wrap items-center justify-between gap-6 p-6 md:p-8"
+        >
           <p className="max-w-2xl text-[clamp(20px,2.2vw,28px)] leading-snug font-medium tracking-[-0.02em] text-balance text-tx">
             {offer.cta.lead}
             <span className="text-mu">{offer.cta.rest}</span>
@@ -87,7 +92,7 @@ export function Services() {
           <Button href={offer.cta.button.href} icon="arrow">
             {offer.cta.button.label}
           </Button>
-        </div>
+        </Card>
       </Reveal>
     </Section>
   )

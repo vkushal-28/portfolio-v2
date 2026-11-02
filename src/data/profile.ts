@@ -1,11 +1,11 @@
-import type { Profile } from './types'
+import type { Profile } from './types.ts'
 
 export const profile: Profile = {
   name: 'Kushal Vala',
   initials: 'kv',
   title: 'Senior Full Stack Developer',
-  location: 'Calgary, AB',
-  timezone: 'Mountain Time',
+  location: 'Greater Toronto Area, ON',
+  timezone: 'EDT / EST',
   headline:
     '8+ years architecting secure, high-performance web platforms across banking, energy and enterprise — with React, Next.js, TypeScript, Node.js and AWS, accelerated by AI-assisted development.',
   openToRoles: ['Sr. Full Stack Engineer', 'Sr. Front End Engineer', 'Sr. React Developer'],

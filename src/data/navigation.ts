@@ -9,6 +9,9 @@ export const navLinks: readonly NavItem[] = [
   { label: 'Contact', href: '#contact' },
 ]
 
+/** Keyboard skip link; targets `<main id="main">`. */
+export const skipLink: NavItem = { label: 'Skip to content', href: '#main' }
+
 export const availability: NavItem = { label: 'Available for work', href: '#contact' }
 
 export const footer = {

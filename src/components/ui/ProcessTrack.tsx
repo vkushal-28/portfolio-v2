@@ -3,6 +3,7 @@ import type { LucideIcon } from 'lucide-react'
 import { useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from 'react'
 import { ease, spring } from '@/components/motion/presets'
 import { cn } from '@/lib/cn'
+import { pad2 } from '@/lib/format'
 import { Chip } from './Chip'
 import { IconNode } from './IconNode'
 
@@ -51,7 +52,7 @@ export function ProcessStep({ index, stepLabel, title, icon, desc, tag }: Proces
         <IconNode icon={icon} />
       </motion.span>
       <span className="font-mono text-xs text-ac min-[620px]:mt-4">
-        {stepLabel} {String(index + 1).padStart(2, '0')}
+        {stepLabel} {pad2(index + 1)}
       </span>
       <h4 className="text-[19px] leading-snug font-semibold text-tx">{title}</h4>
       <p className="text-sm leading-relaxed text-mu">{desc}</p>
@@ -79,12 +80,12 @@ const connectorStyles = {
   x: {
     dashes: 'bg-[repeating-linear-gradient(to_right,var(--color-ln4)_0_8px,transparent_8px_16px)]',
     fill: 'origin-left bg-linear-to-r',
-    dot: 'top-1/2 -translate-x-1/2 -translate-y-1/2',
+    dot: 'top-1/2 left-0 -translate-x-1/2 -translate-y-1/2',
   },
   y: {
     dashes: 'bg-[repeating-linear-gradient(to_bottom,var(--color-ln4)_0_8px,transparent_8px_16px)]',
     fill: 'origin-top bg-linear-to-b',
-    dot: 'left-1/2 -translate-x-1/2 -translate-y-1/2',
+    dot: 'top-0 left-1/2 -translate-x-1/2 -translate-y-1/2',
   },
 }
 
@@ -97,7 +98,6 @@ const fillIn = {
 /** Dashed line through the node centres: lime fill draws along it, then a dot travels it. */
 function Connector({ axis, play, dotDelay, className, style }: ConnectorProps) {
   const styles = connectorStyles[axis]
-  const edge = axis === 'x' ? 'left' : 'top'
   return (
     <span
       aria-hidden="true"
@@ -106,33 +106,34 @@ function Connector({ axis, play, dotDelay, className, style }: ConnectorProps) {
     >
       <span className={cn('absolute inset-0', styles.dashes)} />
       <motion.span
-        className={cn(
-          'absolute inset-0 from-ac to-ac2 shadow-[0_0_10px_color-mix(in_srgb,var(--color-ac)_55%,transparent)]',
-          styles.fill,
-        )}
+        className={cn('absolute inset-0 from-ac to-ac2 shadow-glow-sm', styles.fill)}
         variants={fillIn[axis]}
       />
       {play && (
-        <motion.span
-          className={cn(
-            'absolute size-2.5 rounded-full bg-ac2 shadow-[0_0_12px_3px_color-mix(in_srgb,var(--color-ac)_70%,transparent)]',
-            styles.dot,
-          )}
-          initial={{ [edge]: '0%', opacity: 0 }}
-          animate={{ [edge]: ['0%', '100%'], opacity: [0, 1, 1, 0] }}
-          transition={{
-            duration: 4.5,
-            ease: 'easeInOut',
-            repeat: Infinity,
-            delay: dotDelay,
-            opacity: {
+        // The dot sits at the start of a line-length layer; moving the layer by 100% of its own
+        // size carries the dot to the end using transforms only. The wrapper clips the layer once
+        // it has passed the end (otherwise it widens the page) while leaving room for the glow.
+        <span className="absolute -inset-4 overflow-hidden">
+          <motion.span
+            className="absolute inset-4 will-change-transform"
+            initial={{ [axis]: '0%', opacity: 0 }}
+            animate={{ [axis]: ['0%', '100%'], opacity: [0, 1, 1, 0] }}
+            transition={{
               duration: 4.5,
-              times: [0, 0.08, 0.92, 1],
+              ease: 'easeInOut',
               repeat: Infinity,
               delay: dotDelay,
-            },
-          }}
-        />
+              opacity: {
+                duration: 4.5,
+                times: [0, 0.08, 0.92, 1],
+                repeat: Infinity,
+                delay: dotDelay,
+              },
+            }}
+          >
+            <span className={cn('absolute size-2.5 rounded-full bg-ac2 shadow-glow', styles.dot)} />
+          </motion.span>
+        </span>
       )}
     </span>
   )

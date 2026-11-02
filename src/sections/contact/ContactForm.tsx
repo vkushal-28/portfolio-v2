@@ -42,7 +42,7 @@ function SuccessState() {
         initial={reduce ? false : { scale: 0, rotate: -30 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ ...spring, delay: 0.1 }}
-        className="grid size-16 place-items-center rounded-full bg-ac text-bg shadow-[0_0_40px_-6px_color-mix(in_srgb,var(--color-ac)_60%,transparent)]"
+        className="grid size-16 place-items-center rounded-full bg-ac text-bg shadow-glow-lg"
       >
         <Check className="size-7" strokeWidth={2.5} />
       </motion.span>

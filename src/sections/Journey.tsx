@@ -12,10 +12,9 @@ import {
 } from '@/components/ui'
 import { experience, journey, type JourneyFilter } from '@/data'
 import { useMediaQuery } from '@/hooks'
+import { pad2 } from '@/lib/format'
 import { MilestoneRow } from './journey/MilestoneRow'
 import { Spine } from './journey/Spine'
-
-const pad = (n: number) => String(n).padStart(2, '0')
 
 export function Journey() {
   const [filter, setFilter] = useState<JourneyFilter>('All')
@@ -23,7 +22,7 @@ export function Journey() {
   const compact = !useMediaQuery('(min-width: 860px)')
 
   const milestones = experience
-    .map((milestone, i) => ({ milestone, chapter: pad(experience.length - i) }))
+    .map((milestone, i) => ({ milestone, chapter: pad2(experience.length - i) }))
     .filter(({ milestone }) => filter === 'All' || milestone.type === filter)
 
   return (
@@ -52,7 +51,7 @@ export function Journey() {
 
       <Reveal delay={0.15}>
         <p aria-live="polite" className="mt-6 font-mono text-[13px] text-mu2">
-          <span className="text-ac">$</span> {journey.logCommand} · {pad(milestones.length)}{' '}
+          <span className="text-ac">$</span> {journey.logCommand} · {pad2(milestones.length)}{' '}
           {journey.logCount} · {journey.logHint}
         </p>
       </Reveal>
@@ -63,7 +62,7 @@ export function Journey() {
         <div className="relative flex md:justify-center">
           <Chip
             variant="pill"
-            className="border-ac/70 bg-bg2 font-mono text-[13px] text-ac shadow-[0_0_24px_-6px_color-mix(in_srgb,var(--color-ac)_50%,transparent)]"
+            className="border-ac/70 bg-bg2 font-mono text-[13px] text-ac shadow-glow-lg"
           >
             <PulseDot />
             {journey.nowLabel}

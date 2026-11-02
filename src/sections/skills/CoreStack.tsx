@@ -1,5 +1,6 @@
 import { IndexRow, MonoLabel } from '@/components/ui'
 import { coreStack, toolkit } from '@/data'
+import { pad2 } from '@/lib/format'
 
 export function CoreStack() {
   return (
@@ -12,12 +13,7 @@ export function CoreStack() {
       </div>
       <ul className="mt-4">
         {coreStack.map((item, i) => (
-          <IndexRow
-            key={item.name}
-            index={String(i + 1).padStart(2, '0')}
-            title={item.name}
-            meta={item.sub}
-          />
+          <IndexRow key={item.name} index={pad2(i + 1)} title={item.name} meta={item.sub} />
         ))}
       </ul>
     </div>

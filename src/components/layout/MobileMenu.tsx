@@ -4,6 +4,7 @@ import { ease, Stagger, StaggerItem } from '@/components/motion'
 import { Button, Container, IconButton, MonoLabel, NavLink } from '@/components/ui'
 import { availability, navLinks, profile } from '@/data'
 import { useFocusTrap, useScrollLock } from '@/hooks'
+import { pad2 } from '@/lib/format'
 import { Logo } from './Logo'
 
 export type MobileMenuProps = {
@@ -43,7 +44,7 @@ export function MobileMenu({ id, onClose }: MobileMenuProps) {
             {navLinks.map((link, i) => (
               <StaggerItem as="li" key={link.href} className="flex items-baseline gap-4">
                 <span aria-hidden="true" className="font-mono text-xs text-ac">
-                  {String(i + 1).padStart(2, '0')}
+                  {pad2(i + 1)}
                 </span>
                 <NavLink
                   href={link.href}

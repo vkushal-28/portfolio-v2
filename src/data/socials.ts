@@ -1,4 +1,4 @@
-import type { Social } from './types'
+import type { Social } from './types.ts'
 
 // PLACEHOLDER: replace each href with your real profile URL.
 export const socials: readonly Social[] = [

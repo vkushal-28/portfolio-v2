@@ -12,7 +12,7 @@ export function MarqueeBand() {
             key={word}
             className="flex items-center gap-7 text-[clamp(22px,2.6vw,34px)] font-medium whitespace-nowrap"
           >
-            <span className={cn(i % 2 ? 'text-tx' : 'text-mu3')}>{word}</span>
+            <span className={cn(i % 2 ? 'text-tx' : 'text-mu2')}>{word}</span>
             <span className="text-ac">✦</span>
           </span>
         ))}

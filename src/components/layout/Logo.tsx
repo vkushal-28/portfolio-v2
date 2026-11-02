@@ -1,4 +1,4 @@
-import { profile } from '@/data'
+import { footer, profile } from '@/data'
 
 /** Lime `kv` mark + name; links back to the top. */
 export function Logo({ onClick }: { onClick?: () => void }) {
@@ -6,7 +6,6 @@ export function Logo({ onClick }: { onClick?: () => void }) {
     <a
       href="#top"
       onClick={onClick}
-      aria-label={`${profile.name} — back to top`}
       className="group inline-flex min-h-11 shrink-0 items-center gap-3"
     >
       <span
@@ -15,7 +14,10 @@ export function Logo({ onClick }: { onClick?: () => void }) {
       >
         {profile.initials}
       </span>
-      <span className="font-semibold tracking-[-0.02em] whitespace-nowrap">{profile.name}</span>
+      <span className="font-semibold tracking-[-0.02em] whitespace-nowrap">
+        {profile.name}
+        <span className="sr-only"> — {footer.backToTop.toLowerCase()}</span>
+      </span>
     </a>
   )
 }

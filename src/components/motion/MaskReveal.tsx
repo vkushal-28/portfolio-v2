@@ -14,7 +14,9 @@ export type MaskRevealProps = {
 export function MaskReveal({ children, delay = 0, className }: MaskRevealProps) {
   const reduce = useReducedMotion()
   return (
-    <span className={cn('inline-block overflow-hidden px-[0.04em] pb-[0.1em] align-bottom', className)}>
+    <span
+      className={cn('inline-block overflow-hidden px-[0.04em] pb-[0.1em] align-bottom', className)}
+    >
       <motion.span
         className="inline-block"
         initial={reduce ? false : { y: '110%' }}

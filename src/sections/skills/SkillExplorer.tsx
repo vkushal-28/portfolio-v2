@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { Stagger, StaggerItem, ease } from '@/components/motion'
 import { Chip, FilterTabs, IconBadge, MonoLabel, OutlineNumber } from '@/components/ui'
 import { allSkills, skillGroups, toolkit } from '@/data'
+import { pad2 } from '@/lib/format'
 
-const pad = (n: number) => String(n).padStart(2, '0')
 const options = skillGroups.map((group) => ({ value: group.name, label: group.tab ?? group.name }))
 
 export function SkillExplorer() {
@@ -43,7 +43,7 @@ export function SkillExplorer() {
             className="relative isolate"
           >
             <OutlineNumber
-              value={pad(index + 1)}
+              value={pad2(index + 1)}
               size="lg"
               tone="faint"
               className="absolute -top-10 right-0 -z-10"
@@ -53,7 +53,7 @@ export function SkillExplorer() {
               {group.name}
             </h3>
             <p className="mt-2 font-mono text-xs text-ac">
-              {pad(group.items.length)} {explorer.perDomain}
+              {pad2(group.items.length)} {explorer.perDomain}
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-mu">{group.desc}</p>
 
@@ -67,7 +67,7 @@ export function SkillExplorer() {
                 <StaggerItem key={skill} as="li" variant="pop">
                   <Chip variant="tile" interactive as="div" className="group/tile h-full">
                     <span className="font-mono text-xs text-mu2 transition-colors duration-300 group-hover/tile:text-ac">
-                      {pad(i + 1)}
+                      {pad2(i + 1)}
                     </span>
                     <span className="text-[15px] leading-snug text-tx">{skill}</span>
                     <span
