@@ -8,7 +8,12 @@ export const profile: Profile = {
   timezone: 'EDT / EST',
   headline:
     '8+ years architecting secure, high-performance web platforms across banking, energy and enterprise — with React, Next.js, TypeScript, Node.js and AWS, accelerated by AI-assisted development.',
-  openToRoles: ['Sr. Full Stack Engineer', 'Sr. Front End Engineer', 'Sr. React Developer'],
+  openToRoles: [
+    'Sr. Full Stack Engineer',
+    'Sr. MERN stack Engineer',
+    'Sr. Front End Engineer',
+    'Sr. React Developer',
+  ],
   rotatingWords: [
     'secure banking platforms',
     'scalable microservices',
@@ -38,15 +43,14 @@ export const profile: Profile = {
     { value: 50, suffix: 'K+', label: 'daily transactions handled' },
   ],
   marquee: [
-    'Microservices',
     'Full-Stack Engineering',
-    'AWS Cloud',
+    'Microservices',
     'Performance',
     'AI-Assisted Development',
     'OAuth · JWT · RBAC',
   ],
-  // PLACEHOLDER: replace with your real address.
-  email: '[you@yourdomain.com]',
+
+  email: 'kushal.vala.dev@gmail.com',
   // PLACEHOLDER: add the file at public/resume.pdf.
   resumeUrl: '/resume.pdf',
   // PLACEHOLDER: set to an imported image (e.g. src/assets/portrait.jpg) when available.

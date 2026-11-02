@@ -43,7 +43,7 @@ export function Orbit({
       aria-hidden="true"
       className={cn(
         'pointer-events-none relative rounded-full border',
-        dashed ? 'border-dashed border-ln3' : 'border-ln1',
+        dashed ? 'border-dashed border-ln4' : 'border-ln4',
         !reduce && 'animate-orbit will-change-transform',
         className,
       )}

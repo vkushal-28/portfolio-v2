@@ -16,7 +16,6 @@ import {
   GridPattern,
   Outline,
   Section,
-  TechPill,
   WindowFrame,
 } from '@/components/ui'
 import { hero, profile, techBadges, type TechBadge } from '@/data'
@@ -29,7 +28,22 @@ const orbitItems = (ring: TechBadge['ring']): OrbitItem[] =>
     .map((badge) => ({
       id: badge.name,
       angle: badge.angle,
-      content: <TechPill name={badge.name} color={badge.color} />,
+      content: (
+        <span
+          className="grid size-14 place-items-center rounded-xl border bg-s2/92 shadow-[0_10px_30px_rgb(0_0_0/0.45)]"
+          style={{ borderColor: `color-mix(in srgb, ${badge.color} 42%, transparent)` }}
+        >
+          <img
+            src={badge.imageLink}
+            alt={badge.name}
+            width={40}
+            height={40}
+            loading="lazy"
+            decoding="async"
+            className="size-9 object-contain"
+          />
+        </span>
+      ),
     }))
 
 const outerItems = orbitItems('outer')

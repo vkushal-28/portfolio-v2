@@ -9,7 +9,7 @@ export type OrbitRingProps = {
 }
 
 /** Dashed ring around a `relative` round parent, rotating with a glowing lime dot. */
-export function OrbitRing({ duration = 8, inset = 10, className }: OrbitRingProps) {
+export function OrbitRing({ duration = 8, inset = 1, className }: OrbitRingProps) {
   return (
     <span
       aria-hidden="true"

@@ -98,6 +98,7 @@ export type Project = {
 export type TechBadge = {
   name: string
   color: string
+  imageLink: string
   ring: 'outer' | 'inner'
   /** Degrees, clockwise from 3 o'clock (see `Orbit`). */
   angle: number
