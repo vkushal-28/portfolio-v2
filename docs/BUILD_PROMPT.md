@@ -181,7 +181,7 @@ Create typed data files with this exact content.
 ### profile.ts
 - name: `Kushal Vala`, initials: `kv`
 - title: `Senior Full Stack Developer`
-- location: `Calgary, AB`, timezone label: `Mountain Time`
+- location: `Greater Toronto Area, ON`, timezone label: `Mountain Time`
 - headline: `8+ years architecting secure, high-performance web platforms across banking, energy and enterprise — with React, Next.js, TypeScript, Node.js and AWS, accelerated by AI-assisted development.`
 - openToRoles (typed one at a time in the hero; the list may grow, so nothing may assume 3 items): `Sr. Full Stack Engineer`, `Sr. Front End Engineer`, `Sr. React Developer`
 - rotatingWords: `secure banking platforms`, `scalable microservices`, `fast, accessible UIs`, `cloud-native systems`
@@ -345,7 +345,7 @@ Top border `ln2`. Left: `© 2026 Kushal Vala. Designed & built with care.` Right
 const engineer = {
   name: "Kushal Vala",
   role: "Senior Full Stack Dev",
-  based: "Calgary, AB",
+  based: "Greater Toronto Area, AB",
   experience: "8+ years",
   stack: ["React", "Next.js", "Node"],
   openToWork: true

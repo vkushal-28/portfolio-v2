@@ -31,7 +31,7 @@ export const profile: Profile = {
     { text: ' — from first sketch to production at scale.', tone: 'muted' },
   ],
   facts: [
-    { label: 'Based in', value: 'Calgary, AB' },
+    { label: 'Based in', value: 'GTA, ON' },
     { label: 'Focus', value: 'Full-stack · Security' },
     { label: 'Experience', value: '8+ years' },
     { label: 'Domains', value: 'Banking · Energy' },

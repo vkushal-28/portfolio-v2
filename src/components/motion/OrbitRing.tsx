@@ -19,7 +19,7 @@ export function OrbitRing({ duration = 8, inset = 1, className }: OrbitRingProps
       )}
       style={{ inset: -inset, animationDuration: `${duration}s` }}
     >
-      <span className="absolute -top-[3px] left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-ac shadow-glow" />
+      <span className="absolute -top-0.75 left-1/2 size-1.5 -translate-x-1/2 rounded-full bg-ac shadow-glow" />
     </span>
   )
 }
