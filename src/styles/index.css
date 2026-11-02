@@ -274,6 +274,56 @@
   }
 }
 
+/*
+ * Hero orbit badge: pops in (staggered by `--i`), bobs gently and pulses a glow
+ * in its `--badge` colour. Uses `scale`/`translate` so it never fights the
+ * counter-rotation transform on the parent.
+ */
+@keyframes badge-in {
+  from {
+    opacity: 0;
+    scale: 0.3;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    filter: blur(0);
+  }
+}
+@keyframes badge-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+@keyframes badge-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 10px 30px rgb(0 0 0 / 0.45),
+      0 0 0 0 color-mix(in srgb, var(--badge) 0%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 10px 30px rgb(0 0 0 / 0.45),
+      0 0 22px 2px color-mix(in srgb, var(--badge) 45%, transparent);
+  }
+}
+
+@utility orbit-badge {
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
+  @media (prefers-reduced-motion: no-preference) {
+    animation:
+      badge-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) calc(0.5s + var(--i, 0) * 0.12s) both,
+      badge-float 4.5s ease-in-out calc(var(--i, 0) * -0.7s) infinite,
+      badge-glow 3.6s ease-in-out calc(var(--i, 0) * -0.9s) infinite;
+  }
+}
+
 @utility no-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar {

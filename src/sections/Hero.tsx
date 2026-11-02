@@ -1,5 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { useRef } from 'react'
+import { useRef, type CSSProperties } from 'react'
 import {
   MaskReveal,
   Orbit,
@@ -25,13 +25,19 @@ const GRID_MASK = 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transpa
 const orbitItems = (ring: TechBadge['ring']): OrbitItem[] =>
   techBadges
     .filter((badge) => badge.ring === ring)
-    .map((badge) => ({
+    .map((badge, i) => ({
       id: badge.name,
       angle: badge.angle,
       content: (
         <span
-          className="grid size-14 place-items-center rounded-xl border bg-s2/92 shadow-[0_10px_30px_rgb(0_0_0/0.45)]"
-          style={{ borderColor: `color-mix(in srgb, ${badge.color} 42%, transparent)` }}
+          className="orbit-badge grid size-14 place-items-center rounded-xl border bg-s2/92"
+          style={
+            {
+              borderColor: `color-mix(in srgb, ${badge.color} 42%, transparent)`,
+              '--badge': badge.color,
+              '--i': ring === 'inner' ? i + 5 : i,
+            } as CSSProperties
+          }
         >
           <img
             src={badge.imageLink}
