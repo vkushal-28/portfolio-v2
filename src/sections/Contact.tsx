@@ -10,6 +10,7 @@ import {
 } from '@/components/ui'
 import { contact, profile, socials } from '@/data'
 import { ContactForm } from './contact/ContactForm'
+import { CopyButton } from './contact/CopyButton'
 
 const elsewhere = [...socials, { label: contact.resumeLabel, href: profile.resumeUrl }]
 
@@ -36,12 +37,19 @@ export function Contact() {
           <p className="max-w-md text-lg leading-[1.7] text-mu">{contact.intro}</p>
 
           <MonoLabel className="mt-10">{contact.emailLabel}</MonoLabel>
-          <a
-            href={`mailto:${profile.email}`}
-            className="group mt-3 self-start text-[clamp(22px,2.4vw,32px)] font-medium tracking-[-0.02em] break-all text-tx"
-          >
-            <span className="underline-grow pb-1 [--underline-h:3px]">{profile.email}</span>
-          </a>
+          <div className="mt-3 flex items-center gap-3 self-start">
+            <a
+              href={`mailto:${profile.email}`}
+              className="group min-w-0 text-[clamp(22px,2.4vw,32px)] font-medium tracking-[-0.02em] break-all text-tx"
+            >
+              <span className="underline-grow pb-1 [--underline-h:3px]">{profile.email}</span>
+            </a>
+            <CopyButton
+              value={profile.email}
+              label={contact.copyEmail}
+              copiedLabel={contact.emailCopied}
+            />
+          </div>
 
           <MonoLabel className="mt-10">{contact.elsewhereLabel}</MonoLabel>
           <ul className="mt-3 border-t border-ln2">
