@@ -1,4 +1,4 @@
-import { useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion, type Transition } from 'motion/react'
 import type { ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 
@@ -17,39 +17,49 @@ export type OrbitProps = {
   duration?: number
   /** Rotate counter-clockwise. */
   reverse?: boolean
-  /** Dashed `ln3` ring instead of solid `ln1`. */
+  /** Dashed ring instead of solid. */
   dashed?: boolean
+  /** Seconds before the ring and its items enter. Default 0.3. */
+  delay?: number
   className?: string
 }
 
-/** A rotating ring whose items counter-rotate to stay upright. Decorative. */
+const ENTER_EASE = [0.16, 1, 0.3, 1] as const
+const POP_EASE = [0.34, 1.56, 0.64, 1] as const
+
+/** A rotating ring whose items pop in, bob gently and counter-rotate to stay upright. Decorative. */
 export function Orbit({
   items,
   size,
   duration = 60,
   reverse = false,
   dashed = false,
+  delay = 0.3,
   className,
 }: OrbitProps) {
   const reduce = useReducedMotion()
-  const spin = (dir: boolean) =>
-    reduce
-      ? undefined
-      : { animationDuration: `${duration}s`, animationDirection: dir ? 'reverse' : 'normal' }
   const radius = size / 2
+  const turn = reverse ? -360 : 360
+  const spin: Transition = { duration, ease: 'linear', repeat: Infinity }
 
   return (
-    <div
+    <motion.div
       aria-hidden="true"
       className={cn(
-        'pointer-events-none relative rounded-full border',
-        dashed ? 'border-dashed border-ln4' : 'border-ln4',
-        !reduce && 'animate-orbit will-change-transform',
+        'pointer-events-none relative rounded-full border border-ln4',
+        dashed && 'border-dashed',
         className,
       )}
-      style={{ width: size, height: size, ...spin(reverse) }}
+      style={{ width: size, height: size }}
+      initial={reduce ? false : { opacity: 0, scale: 0.85, rotate: 0 }}
+      animate={reduce ? undefined : { opacity: 1, scale: 1, rotate: turn }}
+      transition={{
+        opacity: { duration: 1.2, ease: ENTER_EASE, delay },
+        scale: { duration: 1.4, ease: ENTER_EASE, delay },
+        rotate: spin,
+      }}
     >
-      {items.map((item) => (
+      {items.map((item, i) => (
         <div
           key={item.id}
           className="absolute top-1/2 left-1/2"
@@ -58,15 +68,34 @@ export function Orbit({
           }}
         >
           <div className="-translate-x-1/2 -translate-y-1/2">
-            <div
-              className={cn(!reduce && 'animate-orbit will-change-transform')}
-              style={spin(!reverse)}
+            {/* Counter-rotation keeps the item upright while the ring spins. */}
+            <motion.div
+              initial={reduce ? false : { rotate: 0 }}
+              animate={reduce ? undefined : { rotate: -turn }}
+              transition={spin}
             >
-              {item.content}
-            </div>
+              <motion.div
+                initial={reduce ? false : { opacity: 0, scale: 0.3, filter: 'blur(6px)' }}
+                animate={
+                  reduce ? undefined : { opacity: 1, scale: 1, filter: 'blur(0px)', y: [0, -7, 0] }
+                }
+                transition={{
+                  default: { duration: 0.8, ease: POP_EASE, delay: delay + 0.2 + i * 0.12 },
+                  filter: { duration: 0.6, delay: delay + 0.2 + i * 0.12 },
+                  y: {
+                    duration: 4.5,
+                    ease: 'easeInOut',
+                    repeat: Infinity,
+                    delay: delay + 1 + i * 0.7,
+                  },
+                }}
+              >
+                {item.content}
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       ))}
-    </div>
+    </motion.div>
   )
 }

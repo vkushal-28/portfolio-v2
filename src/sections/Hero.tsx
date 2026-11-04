@@ -1,5 +1,5 @@
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { useRef, type CSSProperties } from 'react'
+import { useRef } from 'react'
 import {
   MaskReveal,
   Orbit,
@@ -22,22 +22,39 @@ import { hero, profile, techBadges, type TechBadge } from '@/data'
 
 const GRID_MASK = 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 100%)'
 
-const orbitItems = (ring: TechBadge['ring']): OrbitItem[] =>
+const BADGE_SHADOW = '0 10px 30px rgba(0, 0, 0, 0.45)'
+
+/** `#rrggbb` + alpha (0–1) → `rgba(...)`, so motion can interpolate the glow. */
+const rgba = (hex: string, alpha: number) => {
+  const n = Number.parseInt(hex.slice(1), 16)
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`
+}
+
+const orbitItems = (ring: TechBadge['ring'], glow: boolean): OrbitItem[] =>
   techBadges
     .filter((badge) => badge.ring === ring)
     .map((badge, i) => ({
       id: badge.name,
       angle: badge.angle,
       content: (
-        <span
-          className="orbit-badge grid size-14 place-items-center rounded-xl border bg-s2/92"
-          style={
-            {
-              borderColor: `color-mix(in srgb, ${badge.color} 42%, transparent)`,
-              '--badge': badge.color,
-              '--i': ring === 'inner' ? i + 5 : i,
-            } as CSSProperties
+        <motion.span
+          className="grid size-14 place-items-center rounded-xl border bg-s2/92"
+          style={{
+            borderColor: `color-mix(in srgb, ${badge.color} 42%, transparent)`,
+            boxShadow: `${BADGE_SHADOW}, 0 0 0 0 ${rgba(badge.color, 0)}`,
+          }}
+          animate={
+            glow
+              ? {
+                  boxShadow: [
+                    `${BADGE_SHADOW}, 0 0 0 0 ${rgba(badge.color, 0)}`,
+                    `${BADGE_SHADOW}, 0 0 22px 2px ${rgba(badge.color, 0.45)}`,
+                    `${BADGE_SHADOW}, 0 0 0 0 ${rgba(badge.color, 0)}`,
+                  ],
+                }
+              : undefined
           }
+          transition={{ duration: 3.6, ease: 'easeInOut', repeat: Infinity, delay: i * 0.9 }}
         >
           <img
             src={badge.imageLink}
@@ -48,12 +65,9 @@ const orbitItems = (ring: TechBadge['ring']): OrbitItem[] =>
             decoding="async"
             className="size-9 object-contain"
           />
-        </span>
+        </motion.span>
       ),
     }))
-
-const outerItems = orbitItems('outer')
-const innerItems = orbitItems('inner')
 
 const [firstName, lastName] = profile.name.split(' ')
 
@@ -61,6 +75,8 @@ const [firstName, lastName] = profile.name.split(' ')
 export function Hero() {
   const ref = useRef<HTMLElement>(null)
   const reduce = useReducedMotion()
+  const outerItems = orbitItems('outer', !reduce)
+  const innerItems = orbitItems('inner', !reduce)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.15])
   const y = useTransform(scrollYProgress, [0, 1], [0, -80])
@@ -92,6 +108,7 @@ export function Hero() {
           size={360}
           duration={40}
           reverse
+          delay={0.9}
           className="absolute top-0 right-0"
         />
       </div>
