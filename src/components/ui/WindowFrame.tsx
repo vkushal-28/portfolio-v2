@@ -13,13 +13,13 @@ const frames = {
 const bars = {
   editor: 'gap-4 border-b border-ln2 px-5 py-3.5',
   terminal: 'gap-3 border-b border-ln1 px-4 py-2.5',
-  browser: 'gap-3 border-b border-ln2 px-4 py-2.5',
+  browser: 'gap-3 border-b border-ln2 px-3.5 py-1.5',
 } satisfies Record<WindowVariant, string>
 
 const titles = {
   editor: 'font-mono text-xs text-mu2',
   terminal: 'font-mono text-[11px] tracking-[0.1em] text-mu2 uppercase',
-  browser: 'min-w-0 flex-1 truncate rounded-full bg-s2 px-3 py-1 font-mono text-[11px] text-mu2',
+  browser: 'min-w-0 flex-1 truncate rounded-full bg-s2 px-3 py-0.5 font-mono text-[11px] text-mu2',
 } satisfies Record<WindowVariant, string>
 
 const bodies = {
@@ -33,13 +33,18 @@ export type WindowFrameProps = Omit<HTMLAttributes<HTMLDivElement>, 'title'> & {
   title?: ReactNode
   variant?: WindowVariant
   bodyClassName?: string
+  /** Colour the window buttons red/yellow/green like macOS instead of neutral grey. */
+  macDots?: boolean
 }
+
+const macColors = ['#FF5F57', '#FEBC2E', '#28C840']
 
 /** Window chrome (3 dots + title) around content: code editor, terminal or mock browser. */
 export function WindowFrame({
   title,
   variant = 'editor',
   bodyClassName,
+  macDots = false,
   className,
   children,
   ...rest
@@ -49,7 +54,11 @@ export function WindowFrame({
       <div className={cn('flex items-center', bars[variant])}>
         <span aria-hidden="true" className="flex shrink-0 gap-1.5">
           {[0, 1, 2].map((i) => (
-            <span key={i} className="size-2.5 rounded-full bg-ln3" />
+            <span
+              key={i}
+              className={cn('size-2.5 rounded-full', !macDots && 'bg-ln3')}
+              style={macDots ? { backgroundColor: macColors[i] } : undefined}
+            />
           ))}
         </span>
         {title && <span className={titles[variant]}>{title}</span>}

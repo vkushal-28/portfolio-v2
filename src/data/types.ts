@@ -77,7 +77,7 @@ export type WorkflowStep = {
   tag: string
 }
 
-export const projectCategories = ['Fintech', 'Enterprise', 'Cloud'] as const
+export const projectCategories = ['Full-Stack', 'Front-End', 'Back-End'] as const
 export type ProjectCategory = (typeof projectCategories)[number]
 
 export type Project = {

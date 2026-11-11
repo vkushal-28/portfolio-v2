@@ -115,7 +115,7 @@ export function Hero() {
 
       <motion.div
         style={reduce ? undefined : { opacity, y, scale, filter }}
-        className="relative mx-auto grid w-full max-w-[1280px] items-center gap-[72px] px-[clamp(16px,4vw,48px)] md:grid-cols-[1.35fr_1fr] md:max-lg:gap-10"
+        className="relative mx-auto grid w-full max-w-[1400px] items-center gap-[72px] px-[clamp(16px,3vw,40px)] md:grid-cols-[1.35fr_1fr] md:max-lg:gap-10"
       >
         <div className="min-w-0">
           <Reveal delay={0.1}>
