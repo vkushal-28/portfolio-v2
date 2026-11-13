@@ -14,7 +14,7 @@ export const contact = {
   intro:
     'Open to senior full-stack roles and ambitious projects in fintech, energy and enterprise. Have something in mind? My inbox is open.',
   emailLabel: 'Email',
-  copyEmail: 'Copy email address',
+  copyEmail: 'kushal.vala.dev@gmail.com',
   emailCopied: 'Email copied',
   elsewhereLabel: 'Elsewhere',
   resumeLabel: 'Résumé (PDF)',
