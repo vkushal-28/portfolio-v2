@@ -51,7 +51,7 @@ export function ProjectCard({ project, featured, delay }: ProjectCardProps) {
           featured ? 'h-[260px] md:h-[420px] sm:h-[300px]' : 'h-[260px] sm:h-[300px]',
         )}
       >
-        <ProjectMedia project={project} />
+        <ProjectMedia project={project} featured={featured} />
         <span
           aria-hidden="true"
           className="pointer-events-none absolute -top-14 -right-14 size-45 rounded-full border border-dashed border-ln3 motion-safe:animate-orbit"
@@ -82,13 +82,13 @@ export function ProjectCard({ project, featured, delay }: ProjectCardProps) {
             href={project.liveUrl}
             label={work.caseStudyLabel}
             icon={
-              <ArrowRight className="size-5 transition-transform duration-500 ease-expo group-hover/card:-rotate-45" />
+              <ArrowRight className="size-5 transition-transform duration-500 ease-expo group-hover/card:-rotate-45 group-hover/card:text-bg" />
             }
             className="group-hover/card:border-ac group-hover/card:bg-ac group-hover/card:text-bg"
           />
         </motion.div>
         <motion.div variants={rise} className="mt-4 flex flex-1 flex-col">
-          <p className="text-base leading-relaxed text-mu">{project.desc}</p>
+          <p className="line-clamp-5 text-base leading-relaxed text-mu">{project.desc}</p>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 pt-1 md:mt-auto md:pt-6">
             <ul className="flex flex-wrap gap-2">
               {project.stack.map((tech) => (

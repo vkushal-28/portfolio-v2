@@ -13,7 +13,7 @@ export function Skills() {
       <SectionIntro
         title={
           <SectionTitle id="skills-title">
-            <RichText runs={toolkit.title} />
+            <RichText runs={toolkit.title} /> 
           </SectionTitle>
         }
         aside={toolkit.intro}

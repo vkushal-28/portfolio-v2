@@ -77,7 +77,7 @@ export type WorkflowStep = {
   tag: string
 }
 
-export const projectCategories = ['Fintech', 'Enterprise', 'Cloud'] as const
+export const projectCategories = ['Full-Stack', 'Front-End', 'Back-End'] as const
 export type ProjectCategory = (typeof projectCategories)[number]
 
 export type Project = {
@@ -98,6 +98,7 @@ export type Project = {
 export type TechBadge = {
   name: string
   color: string
+  imageLink: string
   ring: 'outer' | 'inner'
   /** Degrees, clockwise from 3 o'clock (see `Orbit`). */
   angle: number

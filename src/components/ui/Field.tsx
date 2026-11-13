@@ -36,7 +36,7 @@ export function Field({ label, id, error, className, ...props }: FieldProps) {
   let control: ReactNode
   if (props.as === 'textarea') {
     const { as, ...textarea } = props
-    control = <textarea rows={5} className={cn(controlClass, 'resize-y')} {...textarea} {...a11y} />
+    control = <textarea rows={6} className={cn(controlClass, 'resize-y')} {...textarea} {...a11y} />
   } else {
     const { as, ...input } = props
     control = <input className={controlClass} {...input} {...a11y} />

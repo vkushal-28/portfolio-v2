@@ -9,7 +9,7 @@
 
 ## Phase 0 — Context & working rules (read first, do not code yet)
 
-You are building a single-page developer portfolio for **Kushal Vala, Senior Full Stack Developer** (Calgary, AB). It needs a unique, modern, senior-level design with professional animations. The visual design is already decided. Reproduce it faithfully from this spec.
+You are building a single-page developer portfolio for **Kushal Vala, Senior Full Stack Developer** (GTA, ON). It needs a unique, modern, senior-level design with professional animations. The visual design is already decided. Reproduce it faithfully from this spec.
 
 **Working rules**
 1. Work **one phase at a time**. At the end of each phase: run `npm run build` and `npm run lint`, fix all errors, then stop and give a short summary (files created, decisions made, anything you need from me).
@@ -181,7 +181,7 @@ Create typed data files with this exact content.
 ### profile.ts
 - name: `Kushal Vala`, initials: `kv`
 - title: `Senior Full Stack Developer`
-- location: `Calgary, AB`, timezone label: `Mountain Time`
+- location: `Greater Toronto Area, ON`, timezone label: `Mountain Time`
 - headline: `8+ years architecting secure, high-performance web platforms across banking, energy and enterprise — with React, Next.js, TypeScript, Node.js and AWS, accelerated by AI-assisted development.`
 - openToRoles (typed one at a time in the hero; the list may grow, so nothing may assume 3 items): `Sr. Full Stack Engineer`, `Sr. Front End Engineer`, `Sr. React Developer`
 - rotatingWords: `secure banking platforms`, `scalable microservices`, `fast, accessible UIs`, `cloud-native systems`
@@ -190,7 +190,7 @@ Create typed data files with this exact content.
   1. `Senior Full Stack Developer with 8+ years building secure, high-performance platforms for banking, energy and enterprise teams — from real-time digital banking dashboards at CIBC to enterprise applications at Enbridge. I specialize in scalable frontend architecture, Node.js microservices and OAuth 2.0 / JWT / RBAC security.`
   2. `I use AI coding tools — GitHub Copilot, Cursor and Claude Code — to ship faster while holding every line to a rigorous review bar. I mentor developers, drive code reviews and Agile delivery, and partner closely with product, UX, QA and business stakeholders.`
 - aboutStatement (H2): `I turn ambiguous problems into calm, well-crafted software — from first sketch to production at scale.` (accent on "calm, well-crafted software", muted on the last clause)
-- facts: Based in `Calgary, AB` · Focus `Full-stack · Security` · Experience `8+ years` · Domains `Banking · Energy`
+- facts: Based in `GTA, ON` · Focus `Full-stack · Security` · Experience `8+ years` · Domains `Banking · Energy`
 - stats: `35%` higher API throughput · `30%` faster page loads · `50%` faster release cycles · `50K+` daily transactions handled
 - marquee: `Microservices`, `Full-Stack Engineering`, `AWS Cloud`, `Performance`, `AI-Assisted Development`, `OAuth · JWT · RBAC`
 - placeholders to keep clearly marked: `email: '[you@yourdomain.com]'`, GitHub / LinkedIn / X URLs, `resume.pdf`, portrait image.
@@ -335,7 +335,7 @@ Top border `ln2`. Left: `© 2026 Kushal Vala. Designed & built with care.` Right
    - No caret on this line; only the role line has one.
 5. Headline paragraph (18px, `mu`, max-width 540px, 18px top margin) at 0.8s.
 6. Buttons (34px top margin) at 0.9s: primary "View selected work" (`#work`) and ghost "Download résumé" (links to `/resume.pdf`, `download`).
-7. Bottom meta row at 1.1s: mono uppercase `Scroll to explore ——— Calgary, AB — Mountain Time`, with the rule filling the space between.
+7. Bottom meta row at 1.1s: mono uppercase `Scroll to explore ——— GTA, ON — EST/EDT Time`, with the rule filling the space between.
 
 **Right column — code card** (fades up at 0.5s):
 - A decorative offset back-card behind it (inset 30px −20px −30px 20px, border `ln1`, bg `s1`).
@@ -345,7 +345,7 @@ Top border `ln2`. Left: `© 2026 Kushal Vala. Designed & built with care.` Right
 const engineer = {
   name: "Kushal Vala",
   role: "Senior Full Stack Dev",
-  based: "Calgary, AB",
+  based: "Greater Toronto Area, AB",
   experience: "8+ years",
   stack: ["React", "Next.js", "Node"],
   openToWork: true
@@ -594,7 +594,7 @@ Section bg `bg2`, top border `ln1`.
    - Open Graph and Twitter tags with a 1200×630 OG image placeholder.
    - `theme-color #0A0B0D`.
    - Favicon: the lime `kv` mark.
-   - JSON-LD `Person` schema (name, jobTitle, address Calgary AB, sameAs socials).
+   - JSON-LD `Person` schema (name, jobTitle, address GTA, ON, sameAs socials).
 6. **Component audit:**
    - Search the sections for repeated markup or repeated long class lists, and extract anything duplicated into a shared component.
    - Confirm that all three filters use `FilterTabs`, all window-style boxes use `WindowFrame`, all cards use `Card`, and all CTAs use `Button`.

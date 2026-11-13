@@ -16,24 +16,58 @@ import {
   GridPattern,
   Outline,
   Section,
-  TechPill,
   WindowFrame,
 } from '@/components/ui'
 import { hero, profile, techBadges, type TechBadge } from '@/data'
 
 const GRID_MASK = 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 100%)'
 
-const orbitItems = (ring: TechBadge['ring']): OrbitItem[] =>
+const BADGE_SHADOW = '0 10px 30px rgba(0, 0, 0, 0.45)'
+
+/** `#rrggbb` + alpha (0–1) → `rgba(...)`, so motion can interpolate the glow. */
+const rgba = (hex: string, alpha: number) => {
+  const n = Number.parseInt(hex.slice(1), 16)
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`
+}
+
+const orbitItems = (ring: TechBadge['ring'], glow: boolean): OrbitItem[] =>
   techBadges
     .filter((badge) => badge.ring === ring)
-    .map((badge) => ({
+    .map((badge, i) => ({
       id: badge.name,
       angle: badge.angle,
-      content: <TechPill name={badge.name} color={badge.color} />,
+      content: (
+        <motion.span
+          className="grid size-14 place-items-center rounded-xl border bg-s2/92"
+          style={{
+            borderColor: `color-mix(in srgb, ${badge.color} 42%, transparent)`,
+            boxShadow: `${BADGE_SHADOW}, 0 0 0 0 ${rgba(badge.color, 0)}`,
+          }}
+          animate={
+            glow
+              ? {
+                  boxShadow: [
+                    `${BADGE_SHADOW}, 0 0 0 0 ${rgba(badge.color, 0)}`,
+                    `${BADGE_SHADOW}, 0 0 22px 2px ${rgba(badge.color, 0.45)}`,
+                    `${BADGE_SHADOW}, 0 0 0 0 ${rgba(badge.color, 0)}`,
+                  ],
+                }
+              : undefined
+          }
+          transition={{ duration: 3.6, ease: 'easeInOut', repeat: Infinity, delay: i * 0.9 }}
+        >
+          <img
+            src={badge.imageLink}
+            alt={badge.name}
+            width={40}
+            height={40}
+            loading="lazy"
+            decoding="async"
+            className="size-9 object-contain"
+          />
+        </motion.span>
+      ),
     }))
-
-const outerItems = orbitItems('outer')
-const innerItems = orbitItems('inner')
 
 const [firstName, lastName] = profile.name.split(' ')
 
@@ -41,6 +75,8 @@ const [firstName, lastName] = profile.name.split(' ')
 export function Hero() {
   const ref = useRef<HTMLElement>(null)
   const reduce = useReducedMotion()
+  const outerItems = orbitItems('outer', !reduce)
+  const innerItems = orbitItems('inner', !reduce)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.15])
   const y = useTransform(scrollYProgress, [0, 1], [0, -80])
@@ -72,13 +108,14 @@ export function Hero() {
           size={360}
           duration={40}
           reverse
+          delay={0.9}
           className="absolute top-0 right-0"
         />
       </div>
 
       <motion.div
         style={reduce ? undefined : { opacity, y, scale, filter }}
-        className="relative mx-auto grid w-full max-w-[1280px] items-center gap-[72px] px-[clamp(16px,4vw,48px)] md:grid-cols-[1.35fr_1fr] md:max-lg:gap-10"
+        className="relative mx-auto grid w-full max-w-[1400px] items-center gap-[72px] px-[clamp(16px,3vw,40px)] md:grid-cols-[1.35fr_1fr] md:max-lg:gap-10"
       >
         <div className="min-w-0">
           <Reveal delay={0.1}>
