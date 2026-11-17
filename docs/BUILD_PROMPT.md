@@ -374,7 +374,7 @@ const engineer = {
   - The H2 statement with `headingIn` reveal.
   - The two paragraphs (18px, line-height 1.75, `mu`) with `fadeUp`, staggered.
   - **Stats row** below a `ln2` top border: 4 columns (auto-fit, min 130px). Each shows a big number (`clamp(36px,3.6vw,48px)`, 600; the first one in `ac`) plus a 14px muted label. Items stagger in at 0.1s steps, and each number uses `<Counter>` (0 → target, starting 0.35s after reveal).
-- **Right:**
+- **Right:** *(superseded by Phase 14 — the Developer ID badge replaces both the portrait card and the facts grid)*
   - **Portrait card**, 4:5 ratio, radius 20px, `ln2` border, radial dark gradient, 14px dot-grid overlay. A lime scan-light band sweeps top to bottom (4s loop). Show the image if provided, otherwise the mono placeholder `[ Portrait photo ]`. Bottom-left status pill: pulsing lime dot + `Currently: Full Stack Developer @ Enbridge`.
   - **Facts grid** (2×2, 1px `ln2` gaps, radius 16px): mono 11px uppercase label `mu2` plus a 16px value.
 
@@ -600,6 +600,109 @@ Section bg `bg2`, top border `ln1`.
    - Confirm that all three filters use `FilterTabs`, all window-style boxes use `WindowFrame`, all cards use `Card`, and all CTAs use `Button`.
    - Add a short JSDoc comment on each shared component explaining its props.
 7. **Clean-up:** remove the playground, check that no unused deps remain, add a `README.md` with setup and deploy steps (Vercel or Netlify), and add `npm run preview`.
+
+---
+
+## Phase 14 — Developer ID badge (About, right column)
+
+Replace the About section's right column (portrait card **and** facts grid from Phase 7) with a **Developer ID badge**. Build it from the Phase 2 tokens and the reusable-component rules. The source illustration is `public/developer-avatar.svg`.
+
+### 14.1 Files
+- `src/components/ui/IdBadge.tsx`: the badge (lanyard, clip, card, fields, footer). Takes `badge` data as a prop.
+- `src/components/ui/DeveloperAvatar.tsx`: the animated illustration, converted from `public/developer-avatar.svg`.
+  - The SVG is **self-contained**: its own `<style>` block defines the palette (`--ac`, `--s2`, `--ln4`…) and every `av-*` animation. Keep it, rendered as `<style>{svgCss}</style>` inside the `<svg>`. Don't rely on the page's tokens inside the SVG, or the colours turn black.
+  - **Scope that `<style>`:** an inline `<style>` in HTML applies to the whole page. Change `svg { --bg… }` to `.badge-av { … }` and the reduced-motion `* { animation:none }` to `.badge-av * { … }`, and give the root `<svg>` the class `badge-av`. Unscoped, it recolours every SVG and kills every animation on the site under reduced motion.
+  - Convert `class` → `className`, `text-anchor` → `textAnchor`, inline `style="…"` strings → style objects (keep `var(--…)` and `color-mix()` values), keep every `av-*` class and `animation-delay`, mark it `aria-hidden`.
+- `src/hooks/useLocalTime.ts`: formatted current time for an IANA zone, refreshed every 20s; clear the interval on unmount. Store a `now` timestamp in state and format during render (no `setState` directly in the effect body — the React hooks lint rule rejects it).
+- Badge-level keyframes and classes go in `src/styles/index.css` (14.6). Badge data lives in `src/data/profile.ts` → `badge` (14.5); never hard-code it.
+
+### 14.2 Structure (top to bottom)
+```
+<div class="stage">            relative, padding-top 92px, perspective 1200px, max-width 380px, centred
+  <Lanyard/>                   static strap
+  <Clip/>                      static grey clip
+  <div class="id-swing">       gentle sway animation
+    <article class="id-badge"> the card; 3D tilt on hover / focus
+      punched hole
+      header row
+      illustration panel (DeveloperAvatar)
+      name + title
+      fields row (Based / Exp / Status)
+      "Now →" row
+      footer (barcode + live local time)
+```
+
+### 14.3 Exact styling (Phase 2 tokens: bg, s1–s3, ln1–ln4, tx, tx2, tx3, mu, mu2, ac, ac2)
+- **Stage:** `relative; padding-top: 92px; perspective: 1200px`.
+- **Lanyard** (`aria-hidden`): absolute at `top: -24px`, centred, `30px × 112px`, radius 4px, bg `s3`, 1px `ln3` border, overflow hidden. Inside: `badge.lanyardText` in mono 9px, `letter-spacing .3em`, `ac` at 80%, `writing-mode: vertical-rl`.
+- **Clip** (`aria-hidden`, does **not** swing): absolute at `top: 87px`, centred, `46px × 24px`, radius 7px, z-index 2, `linear-gradient(180deg, #5a5f69, #2c3036)`, 1px `#6b717c` border, shadow `0 4px 10px rgba(0,0,0,.5)`.
+- **Swing wrapper:** `transform-origin: 50% -80px`; keyframe `sway` rotate −1.6° → 1.6° → −1.6° over 7s, ease-in-out, infinite.
+- **Card (`article`):** `aria-label="Developer ID: {name}, {title}"`, `tabIndex={0}` (nothing inside is focusable, so this is what lets keyboard users trigger the tilt) with a visible `ac` focus ring.
+  - Box: relative, overflow hidden, radius 22px, 1px `ln3` border, `linear-gradient(165deg, s2, s1 70%)`, shadow `0 40px 80px -30px rgba(0,0,0,.85)`, `transform-style: preserve-3d`.
+  - Transition: transform 0.7s spring (`cubic-bezier(.34,1.56,.64,1)`), border-color 0.4s, box-shadow 0.5s.
+  - `::before`: 4px `ac` strip along the top edge.
+  - `::after` light sweep: 115° gradient transparent 35% → `ac` 13% → `rgba(255,255,255,.07)` 50% → transparent 60%, `background-size: 250% 100%`; auto-plays every 7s (`sheenAuto`, `background-position 130% → -30%`, holding the first 70%), starting after 1.5s.
+  - **Hover / `:focus-within`** (plain CSS, not Motion): `rotateY(-9deg) rotateX(5deg) translateY(-6px)`, border `color-mix(ac 50%, ln3)`, extra glow `0 0 40px -12px color-mix(ac 35%)`, the sweep runs once (1.1s).
+- **Punched hole:** absolute at `top: 12px`, centred, `58px × 10px`, pill, bg `bg`, 1px `ln3` border.
+- **Header row:** padding `30px 22px 0`, mono 11px, `letter-spacing .14em`, `mu2`. Left `badge.header.left`; right `badge.header.right` in `ac`.
+- **Illustration panel** (`aria-hidden`): margin `16px 22px 0`, height 220px, radius 14px, 1px `ln2` border, overflow hidden, `radial-gradient(circle at 30% 20%, s3, bg)`. Layers, back to front:
+  1. dot grid `radial-gradient(ln3 1px, transparent 1px)` at 14px, 60% opacity;
+  2. 70px lime scan band (transparent → `ac` 14% → transparent), top → bottom, 4s linear loop;
+  3. four 18px `ac` corner brackets (2px borders, 12px inset);
+  4. `DeveloperAvatar`: absolute, bottom 0, `left: 14%`, width 72%, height 96% (centre with `left`, **not** a translate — the float animation owns `transform`). Floats `translateY 0 → -6px` over 6s; on card hover gets `drop-shadow(0 0 10px ac 35%)`. If `badge.artworkSrc` is set, render an `<img>` (same box, `object-contain object-bottom`) instead. No placeholder label.
+- **Name block:** padding `20px 22px 0`. Name 26px / 600 / −0.03em, `tx`. Title 15px `ac`.
+- **Fields row** (`<dl>`): margin `18px 22px 0`, 3-column grid, 1px `ln2` gaps, radius 12px. Cell bg `s1`, padding `10px 12px`. `dt` mono 10px uppercase `.12em` `mu2`; `dd` 14px `tx`. Fields with `accent` are `ac`; `pulse` adds a 6px `PulseDot`.
+- **Now row:** margin `16px 22px 0`, padding `10px 12px`, radius 10px, bg `s3`, 1px `ln2` border, 13px `tx2`; starts with mono 11px `NOW → ` in `mu2`.
+- **Footer:** flex space-between, items end, margin `18px 22px 22px`, padding-top 16px, 1px **dashed** `ln3` top border.
+  - Left: decorative barcode `150px × 34px` (max 50% wide), 75% opacity, `aria-hidden`, `repeating-linear-gradient(90deg, tx2 0 2px, transparent 2px 4px, tx2 4px 5px, transparent 5px 8px, tx2 8px 11px, transparent 11px 13px, tx2 13px 14px, transparent 14px 17px)`.
+  - Right (right-aligned): mono 11px `LOCAL TIME` in `mu2`, then the time at 15px `tx` followed by `badge.timeZoneLabel` in `ac`.
+  - Time: `useLocalTime(badge.timeZone)` with `Intl.DateTimeFormat('en-CA', { hour: 'numeric', minute: '2-digit', timeZone })`; DST handled by `Intl`; empty string if `Intl` throws.
+
+### 14.4 The illustration (`DeveloperAvatar`)
+Start from `public/developer-avatar.svg`: a developer behind a laptop (back of the lid facing the viewer), headphones, glasses, eyes looking down, lime screen glow on the face, code symbols rising out of the laptop, a coffee mug with steam on the **left**, a potted plant on the **right**, a lime halo and a slowly turning dashed ring. Then apply these changes (the component is now the source of truth; the `.svg` file is the original):
+- **Typing hands:** at the end of each sleeve, inside its `av-arm` group and drawn *before* the laptop, add a skin-tone (`#C68A62`) hand with a dark cuff, positioned so the palm peeks out past the lid's side edge and the fingers disappear behind the lid. Each hand sits in a `g.av-tap` (`transform-box: fill-box; transform-origin: 50% 100%`) running `avTap` (0.42s: lift −2.4px with −6° tilt, then settle); the right hand is delayed −0.21s so they alternate.
+- **Headphones:** band and cup outlines `--hp: #8E929B`, cup fill `--hp-deep: #2E323A` (defined with the palette on `.badge-av`).
+- **Glasses:** frames and bridge `#111214` (keep the lime lens tint).
+- **Mug:** body `--mug: #1E3A5F`, rim/edge `--mug-edge: #2F5A8C`, handle in `--mug`; no stripe.
+
+### 14.5 Data (`src/data/profile.ts` → `badge`, typed as `Badge` in `types.ts`)
+```ts
+badge: {
+  lanyardText: 'KUSHAL · VALA · KUSHAL · VALA ·',
+  header: { left: 'DEV · ACCESS', right: 'KV-08' },
+  name: 'Kushal Vala',
+  title: 'Sr. Software Engineer — Full-Stack & Frontend',
+  fields: [
+    { label: 'Based', value: 'GTA, ON' },
+    { label: 'Exp', value: '8+ yrs' },
+    { label: 'Status', value: 'Open', accent: true, pulse: true },
+  ],
+  now: 'Full Stack Developer @ Enbridge',
+  timeZone: 'America/Toronto',
+  timeZoneLabel: 'ET', // covers EST and EDT; the clock itself follows DST
+  artworkSrc: undefined, // PLACEHOLDER: a real illustration replaces the animated avatar
+}
+```
+
+### 14.6 Animation CSS (`src/styles/index.css`)
+- The `av-*` keyframes and classes (plus `avTap` / `.av-tap`) live **inside the SVG's `<style>`** — don't duplicate them.
+- Add `@keyframes sway`, `sheenAuto`, `sheenOnce` (130% → −30%), `avFloat` (0 → −6px) and a scan keyframe (−70px → 220px), and the `.id-swing`, `.id-badge` (+ `::before` / `::after` / hover / focus-within), `.id-avatar` and `.id-scan` rules inside `@layer components`.
+- The **typing speed-up** must be **unlayered** (outside any `@layer`), because the SVG's own `<style>` is unlayered and unlayered CSS beats layered CSS regardless of specificity:
+```css
+.id-badge:hover .av-arm, .id-badge:focus-within .av-arm { animation-duration: .3s }
+.id-badge:hover .av-tap, .id-badge:focus-within .av-tap { animation-duration: .26s }
+.id-badge:hover .av-rise, .id-badge:focus-within .av-rise { animation-duration: 2.6s }
+```
+
+### 14.7 Behaviour and accessibility
+- The badge reveals with the shared `Reveal` when About scrolls into view. The right column is only the badge (the Phase 7 portrait card, its "Currently" pill and the facts grid are removed — the badge's fields and Now row replace them). `FactGrid` and `profile.facts` stay in the codebase, unused.
+- `prefers-reduced-motion: reduce`: stop sway, sheen, float, scan and every `av-*` loop; the hover tilt becomes near-instant (0.12s); the clock still updates.
+- Every decorative element (lanyard, clip, hole, barcode, illustration panel, corner brackets, scan band) is `aria-hidden`. Screen readers read the name, title, fields, Now row and local time as normal text.
+- Stays inside the right column at every width; on phones the column stacks under the About text and the badge stays centred at `max-width: 380px`.
+
+**Done when:** the badge matches this spec; the illustration matches the SVG plus 14.4's changes on a dark background (nothing black or missing); the clock ticks in Toronto time; hover / focus tilts the badge and speeds up the typing (check the computed `animation-duration`); reduced motion is respected; `npm run build` and `npm run lint` pass.
+
+---
 
 **Final deliverable:**
 - `npm run build` produces a static `dist/`.
