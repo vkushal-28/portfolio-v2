@@ -29,7 +29,9 @@ export type Profile = {
   portrait?: string
 }
 
-export type Social = { label: string; href: string }
+export type SocialIcon = 'linkedin' | 'github'
+
+export type Social = { label: string; href: string; icon?: SocialIcon }
 
 export type NavItem = { label: string; href: string }
 

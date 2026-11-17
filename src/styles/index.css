@@ -210,7 +210,7 @@
   initial-value: 0deg;
 }
 
-/* Rotating conic-gradient border, hidden until an ancestor `.group` is hovered. */
+/* Rotating conic-gradient border, hidden until an ancestor `.group` is hovered. Set `--glow-color` to recolour. */
 @utility glow-border {
   &::before {
     content: '';
@@ -221,7 +221,7 @@
     background: conic-gradient(
       from var(--ang),
       transparent 0deg,
-      var(--color-ac) 70deg,
+      var(--glow-color, var(--color-ac)) 70deg,
       var(--color-tx) 110deg,
       transparent 170deg
     );

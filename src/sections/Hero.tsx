@@ -16,9 +16,12 @@ import {
   GridPattern,
   Outline,
   Section,
+  SocialButton,
   WindowFrame,
 } from '@/components/ui'
-import { hero, profile, techBadges, type TechBadge } from '@/data'
+import { hero, profile, socials, techBadges, type TechBadge } from '@/data'
+
+const heroSocials = socials.flatMap((social) => (social.icon ? [{ ...social, icon: social.icon }] : []))
 
 const GRID_MASK = 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 100%)'
 
@@ -161,6 +164,16 @@ export function Hero() {
               {hero.resumeCta.label}
             </Button>
           </Reveal>
+
+          <ul aria-label="Profiles" className="mt-3 flex flex-wrap gap-3">
+            {heroSocials.map((social, i) => (
+              <li key={social.label}>
+                <Reveal delay={1 + i * 0.1}>
+                  <SocialButton icon={social.icon} label={social.label} href={social.href} />
+                </Reveal>
+              </li>
+            ))}
+          </ul>
 
           <Reveal variant="fade" delay={1.1} className="mt-14">
             <p className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-[0.1em] text-mu2 uppercase md:flex-wrap sm:flex-nowrap lg:flex-nowrap">
