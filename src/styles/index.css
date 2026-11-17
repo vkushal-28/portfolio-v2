@@ -293,3 +293,138 @@
     animation-iteration-count: 1 !important;
   }
 }
+
+/* ── Developer ID badge (About). Infinite decorative loops stay in plain CSS. ── */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-1.6deg);
+  }
+  50% {
+    transform: rotate(1.6deg);
+  }
+}
+@keyframes sheenAuto {
+  0%,
+  70% {
+    background-position: 130% 0;
+  }
+  100% {
+    background-position: -30% 0;
+  }
+}
+@keyframes sheenOnce {
+  from {
+    background-position: 130% 0;
+  }
+  to {
+    background-position: -30% 0;
+  }
+}
+@keyframes avFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes idScan {
+  from {
+    transform: translateY(-70px);
+  }
+  to {
+    transform: translateY(220px);
+  }
+}
+
+@layer components {
+  .id-swing {
+    transform-origin: 50% -80px;
+    animation: sway 7s ease-in-out infinite;
+  }
+  .id-badge {
+    transform-style: preserve-3d;
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.85);
+    transition:
+      transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+      border-color 0.4s,
+      box-shadow 0.5s;
+  }
+  /* Lime strip along the top edge. */
+  .id-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: var(--color-ac);
+    z-index: 1;
+  }
+  /* Light sweep: auto-plays every 7s, runs once on hover. */
+  .id-badge::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      115deg,
+      transparent 35%,
+      color-mix(in srgb, var(--color-ac) 13%, transparent),
+      rgba(255, 255, 255, 0.07) 50%,
+      transparent 60%
+    );
+    background-size: 250% 100%;
+    background-position: 130% 0;
+    animation: sheenAuto 7s ease-in-out 1.5s infinite;
+  }
+  .id-badge:hover,
+  .id-badge:focus-within {
+    transform: rotateY(-9deg) rotateX(5deg) translateY(-6px);
+    border-color: color-mix(in srgb, var(--color-ac) 50%, var(--color-ln3));
+    box-shadow:
+      0 40px 80px -30px rgba(0, 0, 0, 0.85),
+      0 0 40px -12px color-mix(in srgb, var(--color-ac) 35%, transparent);
+  }
+  .id-badge:hover::after,
+  .id-badge:focus-within::after {
+    animation: sheenOnce 1.1s ease-in-out both;
+  }
+  .id-avatar {
+    animation: avFloat 6s ease-in-out infinite;
+    transition: filter 0.5s;
+  }
+  .id-badge:hover .id-avatar,
+  .id-badge:focus-within .id-avatar {
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-ac) 35%, transparent));
+  }
+  .id-scan {
+    animation: idScan 4s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .id-swing,
+    .id-badge::after,
+    .id-avatar,
+    .id-scan {
+      animation: none !important;
+    }
+    .id-badge {
+      transition-duration: 0.12s;
+    }
+  }
+}
+
+/* Faster "typing" while the badge is hovered. Unlayered so it beats the SVG's own (unlayered) <style>. */
+.id-badge:hover .av-arm,
+.id-badge:focus-within .av-arm {
+  animation-duration: 0.3s;
+}
+.id-badge:hover .av-tap,
+.id-badge:focus-within .av-tap {
+  animation-duration: 0.26s;
+}
+.id-badge:hover .av-rise,
+.id-badge:focus-within .av-rise {
+  animation-duration: 2.6s;
+}

@@ -7,6 +7,8 @@ export const hero = {
   buildPrefix: 'I build',
   primaryCta: { label: 'View selected work', href: '#work' },
   resumeCta: { label: 'Download résumé', href: profile.resumeUrl },
+  /** Shown after the social profile pills. */
+  emailCta: { label: 'Email me', href: `mailto:${profile.email}`, icon: 'email' },
   scrollHint: 'Scroll to explore',
   codeFile: '~/kushal/profile.ts',
   code: [

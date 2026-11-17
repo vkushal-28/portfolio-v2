@@ -33,11 +33,16 @@ export type WindowFrameProps = Omit<HTMLAttributes<HTMLDivElement>, 'title'> & {
   title?: ReactNode
   variant?: WindowVariant
   bodyClassName?: string
-  /** Colour the window buttons red/yellow/green like macOS instead of neutral grey. */
+  /** macOS-style traffic lights (red/yellow/green, glyphs on hover) instead of neutral grey dots. */
   macDots?: boolean
 }
 
-const macColors = ['#FF5F57', '#FEBC2E', '#28C840']
+/** macOS close / minimise / zoom: fill, darker rim, and the glyph colour shown on hover. */
+const macButtons = [
+  { fill: '#FF5F57', rim: '#E0443E', glyph: '#4D0000', path: 'M3.5 3.5l5 5M8.5 3.5l-5 5' },
+  { fill: '#FEBC2E', rim: '#DEA123', glyph: '#5A3D00', path: 'M3 6h6' },
+  { fill: '#28C840', rim: '#1AAB29', glyph: '#003A00', path: 'M6 3v6M3 6h6' },
+]
 
 /** Window chrome (3 dots + title) around content: code editor, terminal or mock browser. */
 export function WindowFrame({
@@ -52,15 +57,34 @@ export function WindowFrame({
   return (
     <div className={cn('overflow-hidden', frames[variant], className)} {...rest}>
       <div className={cn('flex items-center', bars[variant])}>
-        <span aria-hidden="true" className="flex shrink-0 gap-1.5">
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className={cn('size-2.5 rounded-full', !macDots && 'bg-ln3')}
-              style={macDots ? { backgroundColor: macColors[i] } : undefined}
-            />
-          ))}
-        </span>
+        {macDots ? (
+          <span aria-hidden="true" className="group/dots flex shrink-0 gap-2">
+            {macButtons.map((b) => (
+              <span
+                key={b.fill}
+                className="grid size-3 place-items-center rounded-full"
+                style={{ backgroundColor: b.fill, boxShadow: `inset 0 0 0 0.5px ${b.rim}` }}
+              >
+                <svg
+                  viewBox="0 0 12 12"
+                  className="size-2 opacity-0 transition-opacity duration-150 group-hover/dots:opacity-100"
+                  fill="none"
+                  stroke={b.glyph}
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                >
+                  <path d={b.path} />
+                </svg>
+              </span>
+            ))}
+          </span>
+        ) : (
+          <span aria-hidden="true" className="flex shrink-0 gap-1.5">
+            {[0, 1, 2].map((i) => (
+              <span key={i} className="size-2.5 rounded-full bg-ln3" />
+            ))}
+          </span>
+        )}
         {title && <span className={titles[variant]}>{title}</span>}
       </div>
       <div className={cn(bodies[variant], bodyClassName)}>{children}</div>

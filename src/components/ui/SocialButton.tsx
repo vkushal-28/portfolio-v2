@@ -18,10 +18,22 @@ const GitHubIcon = (props: IconProps) => (
   </svg>
 )
 
+/** Gmail M, single colour (`currentColor`). */
+const GmailIcon = (props: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M2 8.5v9.25C2 18.44 2.56 19 3.25 19H6v-7.7L2 8.5Z" />
+    <path d="M18 11.3V19h2.75c.69 0 1.25-.56 1.25-1.25V8.5l-4 2.8Z" />
+    <path d="M18 6.6v4.7l4-2.8V7.1c0-1.55-1.77-2.43-3-1.5l-1 .99Z" />
+    <path d="M6 11.3V6.6l6 4.4 6-4.4v4.7l-6 4.3-6-4.3Z" />
+    <path d="M2 7.1v1.4l4 2.8V6.6l-1-.99C3.77 4.67 2 5.55 2 7.1Z" />
+  </svg>
+)
+
 /** Brand colours: `bg`/`fg` for the logo chip, `glow` for the border beam, wash and arrow. */
 const brands = {
   linkedin: { Icon: LinkedInIcon, bg: '#0a66c2', fg: '#ffffff', glow: '#3d9bff' },
   github: { Icon: GitHubIcon, bg: '#f0f6fc', fg: '#0d1117', glow: '#a371f7' },
+  email: { Icon: GmailIcon, bg: '#ea4335', fg: '#ffffff', glow: '#ff6b5e' },
 } satisfies Record<
   SocialIcon,
   { Icon: (props: IconProps) => unknown; bg: string; fg: string; glow: string }
@@ -35,17 +47,17 @@ export type SocialButtonProps = {
 }
 
 /**
- * External profile pill in the network's brand colours: logo chip that tilts on hover,
+ * Profile / contact pill (http links open in a new tab; `mailto:` stays put) in the network's brand colours: logo chip that tilts on hover,
  * a rotating brand-coloured border, a wash sweeping up from below and a diagonal arrow.
  */
 export function SocialButton({ icon, label, href, className }: SocialButtonProps) {
   const { Icon, bg, fg, glow } = brands[icon]
+  const external = /^https?:/.test(href)
   return (
     <Pressable
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${label} (opens in a new tab)`}
+      {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
+      aria-label={external ? `${label} (opens in a new tab)` : label}
       style={{ '--brand-bg': bg, '--brand-fg': fg, '--glow-color': glow } as CSSProperties}
       className={cn(
         'group glow-border relative isolate inline-flex min-h-10 items-center gap-2 overflow-hidden rounded-full border border-[color-mix(in_srgb,var(--glow-color)_45%,transparent)] bg-s1/70 py-1 pr-3 pl-1 text-[13px] font-medium text-tx backdrop-blur-sm transition-[border-color,box-shadow] duration-500 select-none hover:border-transparent hover:shadow-[0_0_32px_-6px_color-mix(in_srgb,var(--glow-color)_70%,transparent)]',

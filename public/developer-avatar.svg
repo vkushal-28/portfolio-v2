@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="badge-av" viewBox="0 0 220 200" preserveAspectRatio="xMidYMax meet">
+<style>
+  /* Palette (same as the portfolio tokens) so the file renders on its own */
+  svg { --bg:#0A0B0D; --s1:#0E0F12; --s2:#121418; --s3:#15171B; --ln2:#23262D; --ln3:#2E323A; --ln4:#3A3F48;
+        --tx:#EDEBE6; --tx2:#D6D4CF; --tx3:#B4B7BE; --ac:#C8F169; --ac2:#E2FF9E; }
+  @keyframes avBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+  @keyframes avGlint{0%,75%{opacity:0;transform:translateX(-6px)}85%{opacity:1}100%{opacity:0;transform:translateX(6px)}}
+  @keyframes avGlow{0%,100%{opacity:.6}50%{opacity:1}}
+  @keyframes avRise{0%{transform:translateY(0);opacity:0}20%{opacity:1}100%{transform:translateY(-60px);opacity:0}}
+  @keyframes avSteam{0%{transform:translateY(0);opacity:0}30%{opacity:.8}100%{transform:translateY(-12px);opacity:0}}
+  @keyframes avLid{0%,100%{opacity:.5}50%{opacity:1}}
+  @keyframes avArm{0%,100%{transform:translateY(0)}50%{transform:translateY(1.6px)}}
+  @keyframes avPlant{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes avSpin{to{transform:rotate(360deg)}}
+  .av-eye{transform-box:fill-box;transform-origin:center;animation:avBlink 5s ease-in-out infinite}
+  .av-glint{animation:avGlint 4.5s ease-in-out infinite}
+  .av-screenglow{animation:avGlow 3s ease-in-out infinite}
+  .av-orbit{transform-box:fill-box;transform-origin:center;animation:avSpin 40s linear infinite}
+  .av-rise{animation:avRise 4.2s ease-out infinite}
+  .av-steam{animation:avSteam 2.6s ease-out infinite}
+  .av-lidglow{animation:avLid 2.4s ease-in-out infinite;filter:drop-shadow(0 0 4px #C8F169)}
+  .av-arm{animation:avArm .5s ease-in-out infinite}
+  .av-plant{transform-box:fill-box;transform-origin:50% 100%;animation:avPlant 4.5s ease-in-out infinite}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important} }
+</style>
+<!-- halo -->
+<circle cx="110" cy="86" r="66" style="fill: color-mix(in srgb, var(--ac) 9%, transparent)"></circle>
+<circle class="av-orbit" cx="110" cy="86" r="78" style="fill: none; stroke: var(--ln3); stroke-width: 1; stroke-dasharray: 3 7"></circle>
+<!-- code rising out of the laptop -->
+<g class="av-rise" style="animation-delay: 0s"><text x="70" y="112" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: var(--ac)">&lt;/&gt;</text></g>
+<g class="av-rise" style="animation-delay: -1.2s"><text x="132" y="110" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--tx3)">{ }</text></g>
+<g class="av-rise" style="animation-delay: -2.4s"><text x="152" y="116" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; fill: var(--ac)">=&gt;</text></g>
+<g class="av-rise" style="animation-delay: -3.3s"><text x="46" y="118" style="font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--tx3)">npm</text></g>
+<!-- body / hoodie with shoulders -->
+<path d="M50 188c0-30 10-52 30-62 9-4 19-6 30-6s21 2 30 6c20 10 30 32 30 62z" style="fill: #1C2026; stroke: var(--ln4); stroke-width: 1.5"></path>
+<path d="M78 128c-6 10-8 22-8 34M142 128c6 10 8 22 8 34" style="fill: none; stroke: #2A2F37; stroke-width: 1.5; stroke-linecap: round"></path>
+<!-- hood collar -->
+<path d="M86 122c4 12 14 18 24 18s20-6 24-18c-6-4-14-6-24-6s-18 2-24 6z" style="fill: #252A31; stroke: var(--ln4); stroke-width: 1.5"></path>
+<path d="M102 136v18M118 136v18" style="stroke: var(--ac); stroke-width: 1.8; stroke-linecap: round"></path>
+<circle cx="102" cy="156" r="2.2" style="fill: var(--ac)"></circle><circle cx="118" cy="156" r="2.2" style="fill: var(--ac)"></circle>
+<!-- neck -->
+<path d="M102 98h16v20c-4 4-12 4-16 0z" style="fill: #A8704E"></path>
+<!-- ears -->
+<ellipse cx="87" cy="68" rx="4.5" ry="7" style="fill: #C68A62"></ellipse>
+<ellipse cx="133" cy="68" rx="4.5" ry="7" style="fill: #C68A62"></ellipse>
+<!-- face with jawline -->
+<path d="M88 58c0-17 10-26 22-26s22 9 22 26v12c0 14-10 27-22 27s-22-13-22-27z" style="fill: #C68A62"></path>
+<path d="M121 36c7 4 11 12 11 22v12c0 14-10 27-22 27 8-6 13-16 13-28V58c0-9-1-16-2-22z" style="fill: #000; opacity: .12"></path>
+<!-- screen light on face -->
+<ellipse class="av-screenglow" cx="110" cy="84" rx="20" ry="12" style="fill: color-mix(in srgb, var(--ac) 18%, transparent)"></ellipse>
+<!-- hair with volume -->
+<path d="M85 62c-4-22 6-38 26-38 19 0 30 13 27 34-3-9-9-14-17-16-6 6-17 9-28 9-4 2-7 6-8 11z" style="fill: #1E1916"></path>
+<path d="M96 30c9-5 22-4 30 3" style="fill: none; stroke: #4A3F38; stroke-width: 2; stroke-linecap: round"></path>
+<!-- headphones over the head -->
+<path d="M84 66c0-30 11-42 26-42s26 12 26 42" style="fill: none; stroke: var(--ln4); stroke-width: 5; stroke-linecap: round"></path>
+<rect x="78" y="58" width="12" height="21" rx="5.5" style="fill: var(--s2); stroke: var(--ac); stroke-width: 1.5"></rect>
+<rect x="130" y="58" width="12" height="21" rx="5.5" style="fill: var(--s2); stroke: var(--ac); stroke-width: 1.5"></rect>
+<!-- eyebrows -->
+<path d="M94 56c3-2 8-2 11 0M115 56c3-2 8-2 11 0" style="fill: none; stroke: #1E1916; stroke-width: 2; stroke-linecap: round"></path>
+<!-- glasses -->
+<rect x="92" y="59" width="16" height="12" rx="4" style="fill: color-mix(in srgb, var(--ac) 16%, transparent); stroke: var(--tx); stroke-width: 1.6"></rect>
+<rect x="112" y="59" width="16" height="12" rx="4" style="fill: color-mix(in srgb, var(--ac) 16%, transparent); stroke: var(--tx); stroke-width: 1.6"></rect>
+<path d="M108 64h4" style="stroke: var(--tx); stroke-width: 1.6"></path>
+<!-- eyes looking down at the screen -->
+<ellipse class="av-eye" cx="100" cy="67" rx="1.8" ry="2" style="fill: #1A1614"></ellipse>
+<ellipse class="av-eye" cx="120" cy="67" rx="1.8" ry="2" style="fill: #1A1614"></ellipse>
+<path class="av-glint" d="M95 70l6-9M115 70l6-9" style="stroke: rgba(255,255,255,.55); stroke-width: 1.3; stroke-linecap: round"></path>
+<!-- nose and smile -->
+<path d="M110 70c-1 5-3 8-1 9 1 1 3 1 4 0" style="fill: none; stroke: #9A6446; stroke-width: 1.4; stroke-linecap: round"></path>
+<path d="M104 86c3 3 9 3 12 0" style="fill: none; stroke: #7A4A34; stroke-width: 1.6; stroke-linecap: round"></path>
+<!-- sleeves bending down to the keyboard -->
+<g class="av-arm">
+<path d="M66 138c-6 12-4 22 6 28l14 6" style="fill: none; stroke: #1C2026; stroke-width: 14; stroke-linecap: round"></path>
+<path d="M66 138c-6 12-4 22 6 28l14 6" style="fill: none; stroke: var(--ln4); stroke-width: 1.2; stroke-linecap: round; opacity: .6"></path>
+</g>
+<g class="av-arm" style="animation-delay: -.23s">
+<path d="M154 138c6 12 4 22-6 28l-14 6" style="fill: none; stroke: #1C2026; stroke-width: 14; stroke-linecap: round"></path>
+<path d="M154 138c6 12 4 22-6 28l-14 6" style="fill: none; stroke: var(--ln4); stroke-width: 1.2; stroke-linecap: round; opacity: .6"></path>
+</g>
+<!-- desk -->
+<path d="M0 186h220" style="stroke: var(--ln3); stroke-width: 1.5"></path>
+<rect x="0" y="186" width="220" height="14" style="fill: var(--s1)"></rect>
+<!-- coffee mug with steam -->
+<path class="av-steam" d="M28 150c-4-6 4-10 0-16" style="fill: none; stroke: var(--tx3); stroke-width: 1.5; stroke-linecap: round"></path>
+<path class="av-steam" d="M36 152c-4-6 4-10 0-16" style="fill: none; stroke: var(--tx3); stroke-width: 1.5; stroke-linecap: round; animation-delay: -1.2s"></path>
+<rect x="22" y="160" width="20" height="26" rx="4" style="fill: var(--s2); stroke: var(--ln4); stroke-width: 1.5"></rect>
+<path d="M42 166c7 0 7 12 0 12" style="fill: none; stroke: var(--ln4); stroke-width: 1.5"></path>
+<!-- little plant -->
+<g class="av-plant">
+<path d="M188 168c-3-11-10-17-17-19 3 8 8 15 17 19z" style="fill: #7FAE3E"></path>
+<path d="M188 168c3-13 11-20 18-22-3 10-9 17-18 22z" style="fill: #8FC04A"></path>
+<path d="M188 168c-1-14 1-25 0-32-5 9-5 22 0 32z" style="fill: var(--ac)"></path>
+<path d="M188 168c-6-6-14-8-19-6 5 4 11 6 19 6z" style="fill: #6A9535"></path>
+<path d="M188 168c6-7 14-9 20-7-5 5-12 7-20 7z" style="fill: #6A9535"></path>
+</g>
+<rect x="176" y="166" width="24" height="5" rx="2" style="fill: #8A6550"></rect>
+<path d="M178 171h20l-3 15h-14z" style="fill: #7A5A44"></path>
+<path d="M180 175h16" style="stroke: #000; stroke-width: 1; opacity: .15"></path>
+<!-- laptop (back of lid facing us) -->
+<path class="av-lidglow" d="M70 128h80" style="stroke: var(--ac); stroke-width: 2; stroke-linecap: round"></path>
+<rect x="68" y="128" width="84" height="54" rx="6" style="fill: var(--s2); stroke: var(--ln4); stroke-width: 1.5"></rect>
+<text x="110" y="160" text-anchor="middle" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: var(--ac)">kv</text>
+<path d="M58 182h104l-6 4H64z" style="fill: var(--ln3)"></path>
+<!-- hands typing -->
+
+</svg>

@@ -55,4 +55,21 @@ export const profile: Profile = {
   resumeUrl: '/resume.pdf',
   // PLACEHOLDER: set to an imported image (e.g. src/assets/portrait.jpg) when available.
   portrait: undefined,
+
+  badge: {
+    lanyardText: 'KUSHAL · VALA · KUSHAL · VALA ·',
+    header: { left: 'DEV · ACCESS', right: 'KV-08' },
+    name: 'Kushal Vala',
+    title: 'Sr. Software Engineer - Full-Stack | Frontend',
+    fields: [
+      { label: 'Based', value: 'GTA, ON' },
+      { label: 'Exp', value: '8+ yrs' },
+      { label: 'Status', value: 'Open', accent: true, pulse: true },
+    ],
+    now: 'Full Stack Developer @ Enbridge',
+    timeZone: 'America/Toronto',
+    timeZoneLabel: 'ET',
+    // PLACEHOLDER: set to a real illustration to replace the animated avatar.
+    artworkSrc: undefined,
+  },
 }

@@ -15,13 +15,17 @@ import {
   Eyebrow,
   GridPattern,
   Outline,
+  ResumeButton,
   Section,
   SocialButton,
   WindowFrame,
 } from '@/components/ui'
 import { hero, profile, socials, techBadges, type TechBadge } from '@/data'
 
-const heroSocials = socials.flatMap((social) => (social.icon ? [{ ...social, icon: social.icon }] : []))
+const heroSocials = [
+  ...socials.flatMap((social) => (social.icon ? [{ ...social, icon: social.icon }] : [])),
+  hero.emailCta,
+]
 
 const GRID_MASK = 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 100%)'
 
@@ -156,24 +160,33 @@ export function Hero() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.9} className="mt-[34px] flex flex-wrap gap-3">
-            <Button href={hero.primaryCta.href} icon="arrow">
-              {hero.primaryCta.label}
-            </Button>
-            <Button href={hero.resumeCta.href} variant="ghost" download>
-              {hero.resumeCta.label}
-            </Button>
-          </Reveal>
+          {/* CTAs and profile pills share one shrink-to-fit width; the pills fill it too (three equal columns from `sm`, wrapping rows on phones). */}
+          <div className="mt-[34px] w-fit max-w-full">
+            <Reveal delay={0.9} className="flex flex-wrap gap-3 *:grow">
+              <Button href={hero.primaryCta.href} icon="arrow">
+                {hero.primaryCta.label}
+              </Button>
+              <ResumeButton href={hero.resumeCta.href} label={hero.resumeCta.label} />
+            </Reveal>
 
-          <ul aria-label="Profiles" className="mt-3 flex flex-wrap gap-3">
-            {heroSocials.map((social, i) => (
-              <li key={social.label}>
-                <Reveal delay={1 + i * 0.1}>
-                  <SocialButton icon={social.icon} label={social.label} href={social.href} />
-                </Reveal>
-              </li>
-            ))}
-          </ul>
+            <ul
+              aria-label="Profiles"
+              className="mt-5 flex flex-wrap gap-3 *:grow sm:grid sm:grid-cols-3"
+            >
+              {heroSocials.map((social, i) => (
+                <li key={social.label}>
+                  <Reveal delay={1 + i * 0.1} className="h-full">
+                    <SocialButton
+                      icon={social.icon}
+                      label={social.label}
+                      href={social.href}
+                      className="flex w-full justify-between"
+                    />
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <Reveal variant="fade" delay={1.1} className="mt-14">
             <p className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs tracking-[0.1em] text-mu2 uppercase md:flex-wrap sm:flex-nowrap lg:flex-nowrap">
@@ -194,7 +207,12 @@ export function Hero() {
             aria-hidden="true"
             className="absolute inset-[30px_-20px_-30px_20px] rounded-window border border-ln1 bg-s1"
           />
-          <WindowFrame title={hero.codeFile} className="relative" bodyClassName="md:max-lg:p-4">
+          <WindowFrame
+            title={hero.codeFile}
+            macDots
+            className="relative"
+            bodyClassName="md:max-lg:p-4"
+          >
             <CodeBlock code={hero.code} delay={1} className="text-[clamp(12px,1.1vw,14px)]" />
           </WindowFrame>
         </Reveal>

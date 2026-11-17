@@ -1,15 +1,5 @@
 import { Reveal, Stagger, StaggerItem } from '@/components/motion'
-import {
-  Chip,
-  FactGrid,
-  MediaFrame,
-  PulseDot,
-  RichText,
-  Section,
-  SectionHeader,
-  SectionTitle,
-  StatItem,
-} from '@/components/ui'
+import { IdBadge, RichText, Section, SectionHeader, SectionTitle, StatItem } from '@/components/ui'
 import { about, profile } from '@/data'
 
 export function About() {
@@ -44,30 +34,9 @@ export function About() {
           </Stagger>
         </div>
 
-        <div className="flex w-full max-w-[440px] flex-col gap-5 max-md:mx-auto md:max-w-none">
-          <Reveal>
-            <MediaFrame
-              src={profile.portrait}
-              alt={about.portraitAlt}
-              placeholder={about.portraitPlaceholder}
-              scan
-            >
-              <Chip
-                variant="pill"
-                className="absolute bottom-4 left-4 z-10 max-w-[calc(100%-2rem)] bg-bg/80 text-sm whitespace-normal backdrop-blur-md"
-              >
-                <PulseDot />
-                <span>
-                  <span className="text-mu">{about.currentlyLabel}</span> {profile.currently}
-                </span>
-              </Chip>
-            </MediaFrame>
-          </Reveal>
-
-          <Reveal delay={0.15}>
-            <FactGrid facts={profile.facts} />
-          </Reveal>
-        </div>
+        <Reveal className="w-full max-w-[440px] max-md:mx-auto md:max-w-none">
+          <IdBadge badge={profile.badge} />
+        </Reveal>
       </div>
     </Section>
   )
