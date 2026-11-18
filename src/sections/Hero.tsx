@@ -88,7 +88,6 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.15])
   const y = useTransform(scrollYProgress, [0, 1], [0, -80])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.96])
-  const filter = useTransform(scrollYProgress, [0, 1], ['blur(0px)', 'blur(6px)'])
 
   return (
     <Section
@@ -121,7 +120,7 @@ export function Hero() {
       </div>
 
       <motion.div
-        style={reduce ? undefined : { opacity, y, scale, filter }}
+        style={reduce ? undefined : { opacity, y, scale }}
         className="relative mx-auto grid w-full max-w-[1400px] items-center gap-[72px] px-[clamp(16px,3vw,40px)] md:grid-cols-[1.35fr_1fr] md:max-lg:gap-10"
       >
         <div className="min-w-0">
@@ -160,7 +159,7 @@ export function Hero() {
             </p>
           </Reveal>
 
-          {/* CTAs and profile pills share one shrink-to-fit width; the pills fill it too (three equal columns from `sm`, wrapping rows on phones). */}
+          {/* CTAs share one shrink-to-fit width; the icon-only socials sit in a row beneath. */}
           <div className="mt-[34px] w-fit max-w-full">
             <Reveal delay={0.9} className="flex flex-wrap gap-3 *:grow">
               <Button href={hero.primaryCta.href} icon="arrow">
@@ -169,18 +168,16 @@ export function Hero() {
               <ResumeButton href={hero.resumeCta.href} label={hero.resumeCta.label} />
             </Reveal>
 
-            <ul
-              aria-label="Profiles"
-              className="mt-5 flex flex-wrap gap-3 *:grow sm:grid sm:grid-cols-3"
-            >
+            <ul aria-label="Profiles" className="mt-5 flex flex-wrap gap-3">
               {heroSocials.map((social, i) => (
                 <li key={social.label}>
-                  <Reveal delay={1 + i * 0.1} className="h-full">
+                  <Reveal delay={1 + i * 0.1}>
                     <SocialButton
                       icon={social.icon}
                       label={social.label}
                       href={social.href}
-                      className="flex w-full justify-between"
+                      iconOnly
+                      copiedLabel={'copiedLabel' in social ? social.copiedLabel : undefined}
                     />
                   </Reveal>
                 </li>

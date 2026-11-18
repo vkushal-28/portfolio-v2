@@ -330,14 +330,6 @@
     transform: translateY(-6px);
   }
 }
-@keyframes idScan {
-  from {
-    transform: translateY(-70px);
-  }
-  to {
-    transform: translateY(220px);
-  }
-}
 
 @layer components {
   .id-swing {
@@ -398,15 +390,11 @@
   .id-badge:focus-within .id-avatar {
     filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-ac) 35%, transparent));
   }
-  .id-scan {
-    animation: idScan 4s linear infinite;
-  }
 
   @media (prefers-reduced-motion: reduce) {
     .id-swing,
     .id-badge::after,
-    .id-avatar,
-    .id-scan {
+    .id-avatar {
       animation: none !important;
     }
     .id-badge {

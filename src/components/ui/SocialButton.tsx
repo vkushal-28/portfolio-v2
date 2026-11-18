@@ -1,6 +1,8 @@
 import { ArrowUpRight } from 'lucide-react'
-import type { CSSProperties, SVGProps } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { useEffect, useState, type CSSProperties, type SVGProps } from 'react'
 import { cn } from '@/lib/cn'
+import { copyText } from '@/lib/copyText'
 import type { SocialIcon } from '@/data/types'
 import { Pressable } from './Pressable'
 
@@ -43,6 +45,10 @@ export type SocialButtonProps = {
   icon: SocialIcon
   label: string
   href: string
+  /** Round logo-only button; the label becomes the tooltip and accessible name. */
+  iconOnly?: boolean
+  /** For `mailto:` links: the click also copies the address and briefly shows this label. */
+  copiedLabel?: string
   className?: string
 }
 
@@ -50,17 +56,47 @@ export type SocialButtonProps = {
  * Profile / contact pill (http links open in a new tab; `mailto:` stays put) in the network's brand colours: logo chip that tilts on hover,
  * a rotating brand-coloured border, a wash sweeping up from below and a diagonal arrow.
  */
-export function SocialButton({ icon, label, href, className }: SocialButtonProps) {
+export function SocialButton({
+  icon,
+  label,
+  href,
+  iconOnly = false,
+  copiedLabel,
+  className,
+}: SocialButtonProps) {
   const { Icon, bg, fg, glow } = brands[icon]
   const external = /^https?:/.test(href)
-  return (
+  const email = copiedLabel && href.startsWith('mailto:') ? href.slice(7) : undefined
+  const reduce = useReducedMotion()
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (!copied) return
+    const t = setTimeout(() => setCopied(false), 2000)
+    return () => clearTimeout(t)
+  }, [copied])
+
+  // No preventDefault: the mailto: still opens a mail app when there is one.
+  const onClick = email
+    ? () => {
+        copyText(email).then(
+          () => setCopied(true),
+          () => setCopied(false),
+        )
+      }
+    : undefined
+
+  const button = (
     <Pressable
       href={href}
+      onClick={onClick}
       {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
       aria-label={external ? `${label} (opens in a new tab)` : label}
+      title={iconOnly ? label : undefined}
       style={{ '--brand-bg': bg, '--brand-fg': fg, '--glow-color': glow } as CSSProperties}
       className={cn(
-        'group glow-border relative isolate inline-flex min-h-10 items-center gap-2 overflow-hidden rounded-full border border-[color-mix(in_srgb,var(--glow-color)_45%,transparent)] bg-s1/70 py-1 pr-3 pl-1 text-[13px] font-medium text-tx backdrop-blur-sm transition-[border-color,box-shadow] duration-500 select-none hover:border-transparent hover:shadow-[0_0_32px_-6px_color-mix(in_srgb,var(--glow-color)_70%,transparent)]',
+        'group glow-border relative isolate inline-flex min-h-10 items-center gap-2 overflow-hidden rounded-full border border-[color-mix(in_srgb,var(--glow-color)_45%,transparent)] bg-s1/70 text-[13px] font-medium text-tx backdrop-blur-sm transition-[border-color,box-shadow] duration-500 select-none hover:border-transparent hover:shadow-[0_0_32px_-6px_color-mix(in_srgb,var(--glow-color)_70%,transparent)]',
+        iconOnly ? 'size-12 justify-center' : 'py-1 pr-3 pl-1',
         className,
       )}
     >
@@ -71,18 +107,50 @@ export function SocialButton({ icon, label, href, className }: SocialButtonProps
       />
       <span
         aria-hidden="true"
-        className="grid size-7 place-items-center rounded-full bg-(--brand-bg) text-(--brand-fg) shadow-[0_0_14px_-2px_color-mix(in_srgb,var(--glow-color)_55%,transparent)] transition-[rotate,scale,box-shadow] duration-500 ease-expo group-hover:scale-110 group-hover:-rotate-12 group-hover:shadow-[0_0_22px_0_color-mix(in_srgb,var(--glow-color)_75%,transparent)] motion-reduce:group-hover:rotate-0"
+        className={cn(
+          'grid place-items-center rounded-full bg-(--brand-bg) text-(--brand-fg) shadow-[0_0_14px_-2px_color-mix(in_srgb,var(--glow-color)_55%,transparent)] transition-[rotate,scale,box-shadow] duration-500 ease-expo group-hover:scale-110 group-hover:-rotate-12 group-hover:shadow-[0_0_22px_0_color-mix(in_srgb,var(--glow-color)_75%,transparent)] motion-reduce:group-hover:rotate-0',
+          iconOnly ? 'size-9' : 'size-7',
+        )}
       >
-        <Icon className="size-3.5" />
+        <Icon className={iconOnly ? 'size-[18px]' : 'size-3.5'} />
       </span>
-      <span aria-hidden="true">{label}</span>
-      <span
-        aria-hidden="true"
-        className="relative size-3.5 overflow-hidden text-(--glow-color) transition-colors duration-300"
-      >
-        <ArrowUpRight className="absolute inset-0 size-3.5 transition-transform duration-500 ease-expo group-hover:translate-x-3.5 group-hover:-translate-y-3.5" />
-        <ArrowUpRight className="absolute inset-0 size-3.5 -translate-x-3.5 translate-y-3.5 transition-transform duration-500 ease-expo group-hover:translate-0" />
-      </span>
+      {!iconOnly && (
+        <>
+          <span aria-hidden="true">{label}</span>
+          <span
+            aria-hidden="true"
+            className="relative size-3.5 overflow-hidden text-(--glow-color) transition-colors duration-300"
+          >
+            <ArrowUpRight className="absolute inset-0 size-3.5 transition-transform duration-500 ease-expo group-hover:translate-x-3.5 group-hover:-translate-y-3.5" />
+            <ArrowUpRight className="absolute inset-0 size-3.5 -translate-x-3.5 translate-y-3.5 transition-transform duration-500 ease-expo group-hover:translate-0" />
+          </span>
+        </>
+      )}
     </Pressable>
+  )
+
+  if (!email) return button
+
+  return (
+    <span className="relative inline-flex">
+      {button}
+      <AnimatePresence>
+        {copied && (
+          <motion.span
+            aria-hidden="true"
+            initial={reduce ? false : { opacity: 0, y: 4, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 4, x: '-50%' }}
+            transition={{ duration: 0.18 }}
+            className="pointer-events-none absolute bottom-full left-1/2 mb-2 rounded-full border border-ln2 bg-s2 px-2.5 py-1 font-mono text-[11px] whitespace-nowrap text-tx shadow-lg"
+          >
+            {copiedLabel}
+          </motion.span>
+        )}
+      </AnimatePresence>
+      <span className="sr-only" role="status">
+        {copied ? copiedLabel : ''}
+      </span>
+    </span>
   )
 }
