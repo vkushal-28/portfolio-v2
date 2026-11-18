@@ -71,7 +71,6 @@ export function IdBadge({ badge, className }: IdBadgeProps) {
             className="relative mx-[22px] mt-4 h-[220px] overflow-hidden rounded-tile border border-ln2 bg-[radial-gradient(circle_at_30%_20%,var(--color-s3),var(--color-bg))]"
           >
             <span className="absolute inset-0 bg-[radial-gradient(var(--color-ln3)_1px,transparent_1px)] bg-size-[14px_14px] opacity-60" />
-            <span className="id-scan absolute inset-x-0 top-0 h-[70px] bg-[linear-gradient(180deg,transparent,color-mix(in_srgb,var(--color-ac)_14%,transparent),transparent)]" />
             {corners.map((pos) => (
               <span key={pos} className={cn('absolute size-[18px] border-ac', pos)} />
             ))}

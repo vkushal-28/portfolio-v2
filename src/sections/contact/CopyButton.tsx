@@ -2,26 +2,13 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { Check, Copy } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/cn'
+import { copyText } from '@/lib/copyText'
 
 type CopyButtonProps = {
   value: string
   label: string
   copiedLabel: string
   className?: string
-}
-
-async function copyText(text: string) {
-  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text)
-  // Fallback for non-secure contexts (e.g. testing over a LAN IP).
-  const el = document.createElement('textarea')
-  el.value = text
-  el.setAttribute('readonly', '')
-  el.style.position = 'fixed'
-  el.style.opacity = '0'
-  document.body.appendChild(el)
-  el.select()
-  document.execCommand('copy')
-  el.remove()
 }
 
 /** Icon button that copies `value` and briefly swaps to a check mark. */

@@ -647,9 +647,8 @@ Replace the About section's right column (portrait card **and** facts grid from 
 - **Header row:** padding `30px 22px 0`, mono 11px, `letter-spacing .14em`, `mu2`. Left `badge.header.left`; right `badge.header.right` in `ac`.
 - **Illustration panel** (`aria-hidden`): margin `16px 22px 0`, height 220px, radius 14px, 1px `ln2` border, overflow hidden, `radial-gradient(circle at 30% 20%, s3, bg)`. Layers, back to front:
   1. dot grid `radial-gradient(ln3 1px, transparent 1px)` at 14px, 60% opacity;
-  2. 70px lime scan band (transparent → `ac` 14% → transparent), top → bottom, 4s linear loop;
-  3. four 18px `ac` corner brackets (2px borders, 12px inset);
-  4. `DeveloperAvatar`: absolute, bottom 0, `left: 14%`, width 72%, height 96% (centre with `left`, **not** a translate — the float animation owns `transform`). Floats `translateY 0 → -6px` over 6s; on card hover gets `drop-shadow(0 0 10px ac 35%)`. If `badge.artworkSrc` is set, render an `<img>` (same box, `object-contain object-bottom`) instead. No placeholder label.
+  2. four 18px `ac` corner brackets (2px borders, 12px inset);
+  3. `DeveloperAvatar`: absolute, bottom 0, `left: 14%`, width 72%, height 96% (centre with `left`, **not** a translate — the float animation owns `transform`). Floats `translateY 0 → -6px` over 6s; on card hover gets `drop-shadow(0 0 10px ac 35%)`. If `badge.artworkSrc` is set, render an `<img>` (same box, `object-contain object-bottom`) instead. No placeholder label.
 - **Name block:** padding `20px 22px 0`. Name 26px / 600 / −0.03em, `tx`. Title 15px `ac`.
 - **Fields row** (`<dl>`): margin `18px 22px 0`, 3-column grid, 1px `ln2` gaps, radius 12px. Cell bg `s1`, padding `10px 12px`. `dt` mono 10px uppercase `.12em` `mu2`; `dd` 14px `tx`. Fields with `accent` are `ac`; `pulse` adds a 6px `PulseDot`.
 - **Now row:** margin `16px 22px 0`, padding `10px 12px`, radius 10px, bg `s3`, 1px `ln2` border, 13px `tx2`; starts with mono 11px `NOW → ` in `mu2`.
@@ -686,7 +685,7 @@ badge: {
 
 ### 14.6 Animation CSS (`src/styles/index.css`)
 - The `av-*` keyframes and classes (plus `avTap` / `.av-tap`) live **inside the SVG's `<style>`** — don't duplicate them.
-- Add `@keyframes sway`, `sheenAuto`, `sheenOnce` (130% → −30%), `avFloat` (0 → −6px) and a scan keyframe (−70px → 220px), and the `.id-swing`, `.id-badge` (+ `::before` / `::after` / hover / focus-within), `.id-avatar` and `.id-scan` rules inside `@layer components`.
+- Add `@keyframes sway`, `sheenAuto`, `sheenOnce` (130% → −30%), and `avFloat` (0 → −6px), and the `.id-swing`, `.id-badge` (+ `::before` / `::after` / hover / focus-within) and `.id-avatar` rules inside `@layer components`.
 - The **typing speed-up** must be **unlayered** (outside any `@layer`), because the SVG's own `<style>` is unlayered and unlayered CSS beats layered CSS regardless of specificity:
 ```css
 .id-badge:hover .av-arm, .id-badge:focus-within .av-arm { animation-duration: .3s }
@@ -696,8 +695,8 @@ badge: {
 
 ### 14.7 Behaviour and accessibility
 - The badge reveals with the shared `Reveal` when About scrolls into view. The right column is only the badge (the Phase 7 portrait card, its "Currently" pill and the facts grid are removed — the badge's fields and Now row replace them). `FactGrid` and `profile.facts` stay in the codebase, unused.
-- `prefers-reduced-motion: reduce`: stop sway, sheen, float, scan and every `av-*` loop; the hover tilt becomes near-instant (0.12s); the clock still updates.
-- Every decorative element (lanyard, clip, hole, barcode, illustration panel, corner brackets, scan band) is `aria-hidden`. Screen readers read the name, title, fields, Now row and local time as normal text.
+- `prefers-reduced-motion: reduce`: stop sway, sheen, float and every `av-*` loop; the hover tilt becomes near-instant (0.12s); the clock still updates.
+- Every decorative element (lanyard, clip, hole, barcode, illustration panel, corner brackets) is `aria-hidden`. Screen readers read the name, title, fields, Now row and local time as normal text.
 - Stays inside the right column at every width; on phones the column stacks under the About text and the badge stays centred at `max-width: 380px`.
 
 **Done when:** the badge matches this spec; the illustration matches the SVG plus 14.4's changes on a dark background (nothing black or missing); the clock ticks in Toronto time; hover / focus tilts the badge and speeds up the typing (check the computed `animation-duration`); reduced motion is respected; `npm run build` and `npm run lint` pass.
