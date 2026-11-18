@@ -51,8 +51,7 @@ export const profile: Profile = {
   ],
 
   email: 'kushal.vala.dev@gmail.com',
-  // PLACEHOLDER: add the file at public/resume.pdf.
-  resumeUrl: '/resume.pdf',
+  resumeUrl: '/Kushal_Vala_Resume.pdf',
   // PLACEHOLDER: set to an imported image (e.g. src/assets/portrait.jpg) when available.
   portrait: undefined,
 
