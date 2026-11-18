@@ -8,6 +8,8 @@ export { Pressable, type PressableProps } from './Pressable'
 export { usePressMotion } from './interaction'
 export { Button, type ButtonProps } from './Button'
 export { IconButton, type IconButtonProps } from './IconButton'
+export { SocialButton, type SocialButtonProps } from './SocialButton'
+export { ResumeButton, type ResumeButtonProps } from './ResumeButton'
 export { NavLink, type NavLinkProps } from './NavLink'
 export { FilterTabs, type FilterOption, type FilterTabsProps } from './FilterTabs'
 export { Chip, type ChipProps } from './Chip'
@@ -38,3 +40,5 @@ export {
   type ProcessStepProps,
   type ProcessStepData,
 } from './ProcessTrack'
+export { DeveloperAvatar } from './DeveloperAvatar'
+export { IdBadge, type IdBadgeProps } from './IdBadge'

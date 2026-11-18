@@ -27,9 +27,36 @@ export type Profile = {
   resumeUrl: string
   /** Portrait image URL; the About card shows a placeholder until set. */
   portrait?: string
+  badge: Badge
 }
 
-export type Social = { label: string; href: string }
+export type BadgeField = {
+  label: string
+  value: string
+  /** Value in the accent colour. */
+  accent?: boolean
+  /** Leading pulsing dot. */
+  pulse?: boolean
+}
+
+/** Developer ID badge in the About section. */
+export type Badge = {
+  lanyardText: string
+  header: { left: string; right: string }
+  name: string
+  title: string
+  fields: readonly BadgeField[]
+  now: string
+  /** IANA zone for the live clock, e.g. `America/Toronto`. */
+  timeZone: string
+  timeZoneLabel: string
+  /** Real illustration; until set, the animated `DeveloperAvatar` is shown. */
+  artworkSrc?: string
+}
+
+export type SocialIcon = 'linkedin' | 'github' | 'email'
+
+export type Social = { label: string; href: string; icon?: SocialIcon }
 
 export type NavItem = { label: string; href: string }
 
